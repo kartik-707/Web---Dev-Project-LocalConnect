@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalConnect - Find Local Services Near You</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-location-dot"></i>
+                <span>LocalConnect</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="business-listing.html">List Your Business</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="#" class="btn-secondary">Sign In</a>
+                <a href="business-listing.html" class="btn-primary">Add Business</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Find Local Services <span class="highlight">Near You</span></h1>
+            <p>Connect with trusted professionals in your area. From engineers to electricians, find the best local services with verified reviews.</p>
+            
+            <!-- Search Bar -->
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" placeholder="What service do you need? (e.g., Plumber, Electrician)" class="search-input">
+                </div>
+                <div class="location-box">
+                    <i class="fas fa-location-dot"></i>
+                    <input type="text" placeholder="City or ZIP code" class="location-input">
+                </div>
+                <button class="search-btn">Search</button>
+            </div>
+
+            <!-- Popular Searches -->
+            <div class="popular-searches">
+                <span>Popular:</span>
+                <a href="#">Plumbers</a>
+                <a href="#">Electricians</a>
+                <a href="#">Engineers</a>
+                <a href="#">Cleaners</a>
+                <a href="#">Carpenters</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="categories">
+        <div class="container">
+            <h2>Popular Service Categories</h2>
+            <p class="section-subtitle">Browse through our most requested services</p>
+            
+            <div class="category-grid">
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-wrench"></i>
+                    </div>
+                    <h3>Plumbing</h3>
+                    <p>Professional plumbers for all your needs</p>
+                    <span class="service-count">248 Professionals</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <h3>Electrical</h3>
+                    <p>Licensed electricians you can trust</p>
+                    <span class="service-count">192 Professionals</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-gears"></i>
+                    </div>
+                    <h3>Engineering</h3>
+                    <p>Expert engineers for technical work</p>
+                    <span class="service-count">156 Professionals</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-broom"></i>
+                    </div>
+                    <h3>Cleaning</h3>
+                    <p>Professional cleaning services</p>
+                    <span class="service-count">321 Professionals</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-hammer"></i>
+                    </div>
+                    <h3>Carpentry</h3>
+                    <p>Skilled carpenters for your projects</p>
+                    <span class="service-count">189 Professionals</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-paint-roller"></i>
+                    </div>
+                    <h3>Painting</h3>
+                    <p>Quality painting and finishing</p>
+                    <span class="service-count">203 Professionals</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-screwdriver-wrench"></i>
+                    </div>
+                    <h3>Handyman</h3>
+                    <p>All-purpose home repair experts</p>
+                    <span class="service-count">276 Professionals</span>
+                </div>
+
+                <div class="category-card">
+                    <div class="category-icon">
+                        <i class="fas fa-leaf"></i>
+                    </div>
+                    <h3>Landscaping</h3>
+                    <p>Transform your outdoor spaces</p>
+                    <span class="service-count">142 Professionals</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How LocalConnect Works</h2>
+            <p class="section-subtitle">Finding the right professional has never been easier</p>
+            
+            <div class="steps-grid">
+                <div class="step-card">
+                    <div class="step-number">1</div>
+                    <div class="step-icon">
+                        <i class="fas fa-magnifying-glass"></i>
+                    </div>
+                    <h3>Search for Services</h3>
+                    <p>Tell us what you need and where you're located. Browse through verified professionals in your area.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">2</div>
+                    <div class="step-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>Compare Reviews</h3>
+                    <p>Read authentic reviews from real customers. Check ratings, photos, and detailed feedback.</p>
+                </div>
+
+                <div class="step-card">
+                    <div class="step-number">3</div>
+                    <div class="step-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <h3>Contact & Hire</h3>
+                    <p>Connect directly with professionals. Get quotes, schedule appointments, and hire with confidence.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Top Rated Professionals -->
+    <section class="top-rated">
+        <div class="container">
+            <h2>Top Rated Professionals</h2>
+            <p class="section-subtitle">Highly recommended by our community</p>
+            
+            <div class="professionals-grid">
+                <div class="professional-card">
+                    <div class="professional-image">
+                        <img src="https://via.placeholder.com/300x200/8B7355/ffffff?text=Johnson+Plumbing" alt="Professional">
+                        <span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3>Johnson Plumbing Services</h3>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-number">5.0</span>
+                            <span class="review-count">(127 reviews)</span>
+                        </div>
+                        <p class="service-type"><i class="fas fa-wrench"></i> Plumbing</p>
+                        <p class="location"><i class="fas fa-location-dot"></i> Downtown, City Center</p>
+                        <div class="card-actions">
+                            <button class="btn-view">View Profile</button>
+                            <button class="btn-contact"><i class="fas fa-phone"></i> Contact</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="professional-card">
+                    <div class="professional-image">
+                        <img src="https://via.placeholder.com/300x200/8B7355/ffffff?text=Elite+Electric" alt="Professional">
+                        <span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3>Elite Electric Solutions</h3>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <span class="rating-number">4.9</span>
+                            <span class="review-count">(98 reviews)</span>
+                        </div>
+                        <p class="service-type"><i class="fas fa-bolt"></i> Electrical</p>
+                        <p class="location"><i class="fas fa-location-dot"></i> Westside, Main Street</p>
+                        <div class="card-actions">
+                            <button class="btn-view">View Profile</button>
+                            <button class="btn-contact"><i class="fas fa-phone"></i> Contact</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="professional-card">
+                    <div class="professional-image">
+                        <img src="https://via.placeholder.com/300x200/8B7355/ffffff?text=ProClean+Services" alt="Professional">
+                        <span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>
+                    </div>
+                    <div class="professional-info">
+                        <h3>ProClean Services</h3>
+                        <div class="rating">
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star"></i>
+                            <i class="fas fa-star-half-alt"></i>
+                            <span class="rating-number">4.8</span>
+                            <span class="review-count">(215 reviews)</span>
+                        </div>
+                        <p class="service-type"><i class="fas fa-broom"></i> Cleaning</p>
+                        <p class="location"><i class="fas fa-location-dot"></i> Eastside, Park Avenue</p>
+                        <div class="card-actions">
+                            <button class="btn-view">View Profile</button>
+                            <button class="btn-contact"><i class="fas fa-phone"></i> Contact</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <h3>50,000+</h3>
+                    <p>Active Users</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-briefcase"></i>
+                    </div>
+                    <h3>2,500+</h3>
+                    <p>Listed Businesses</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <h3>100,000+</h3>
+                    <p>Reviews Posted</p>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-icon">
+                        <i class="fas fa-handshake"></i>
+                    </div>
+                    <h3>25,000+</h3>
+                    <p>Jobs Completed</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta">
+        <div class="container">
+            <div class="cta-content">
+                <h2>Are You a Service Professional?</h2>
+                <p>Join thousands of professionals growing their business on LocalConnect. Get more customers and build your reputation.</p>
+                <div class="cta-buttons">
+                    <a href="business-listing.html" class="btn-primary btn-large">List Your Business Free</a>
+                    <a href="about.html" class="btn-secondary btn-large">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <i class="fas fa-location-dot"></i>
+                        <span>LocalConnect</span>
+                    </div>
+                    <p>Connecting communities with trusted local service professionals since 2020.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>For Users</h4>
+                    <ul>
+                        <li><a href="services.html">Find Services</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Write a Review</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>For Businesses</h4>
+                    <ul>
+                        <li><a href="business-listing.html">List Your Business</a></li>
+                        <li><a href="#">Business Resources</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2024 LocalConnect. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
