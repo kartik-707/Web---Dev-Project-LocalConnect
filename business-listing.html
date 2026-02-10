@@ -11,11 +11,11 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
+            <a href="index.html" class="logo">
                 <i class="fas fa-location-dot"></i>
                 <span>LocalConnect</span>
-            </div>
-            <ul class="nav-menu">
+            </a>
+            <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="about.html">About Us</a></li>
@@ -23,7 +23,7 @@
                 <li><a href="contact.html">Contact</a></li>
             </ul>
             <div class="nav-buttons">
-                <a href="#" class="btn-secondary">Sign In</a>
+                <a href="#" class="btn-secondary" id="signInBtn">Sign In</a>
                 <a href="business-listing.html" class="btn-primary">Add Business</a>
             </div>
         </div>
@@ -83,7 +83,7 @@
                     <p>Fill out the form below to list your business. All fields marked with * are required.</p>
                 </div>
 
-                <div class="listing-form">
+                <form class="listing-form" id="businessForm">
                     <!-- Basic Information -->
                     <div class="form-section">
                         <h3><i class="fas fa-building"></i> Basic Information</h3>
@@ -116,13 +116,13 @@
                             </div>
                             <div class="form-group">
                                 <label>Phone Number *</label>
-                                <input type="tel" placeholder="+1 (555) 000-0000" class="form-input">
+                                <input type="tel" placeholder="+91 00000-00000" class="form-input">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label>Business Description *</label>
-                            <textarea placeholder="Tell customers about your business, services, and what makes you unique..." class="form-textarea" rows="5"></textarea>
+                            <textarea id="description" placeholder="Tell customers about your business, services, and what makes you unique..." class="form-textarea" rows="5"></textarea>
                             <span class="form-helper">Minimum 100 characters</span>
                         </div>
                     </div>
@@ -160,7 +160,7 @@
                     <!-- Business Hours -->
                     <div class="form-section">
                         <h3><i class="fas fa-clock"></i> Business Hours</h3>
-                        <div class="hours-grid">
+                        <div class="hours-grid" id="hoursGrid">
                             <div class="hours-row">
                                 <span class="day-label">Monday</span>
                                 <input type="time" class="time-input" value="09:00">
@@ -275,16 +275,22 @@
                     <div class="form-section">
                         <div class="terms-section">
                             <label class="checkbox-label large">
-                                <input type="checkbox" required>
-                                I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                                 <input type="checkbox" required id="termsAgree">
+                                     I agree to the Terms of Service and Privacy Policy
                             </label>
+
+                            <p class="terms-links">
+                                <a href="#" id="openTerms">Terms of Service</a> |
+                                <a href="#" id="openPrivacy">Privacy Policy</a>
+                            </p>
+
                         </div>
                         <div class="submit-buttons">
                             <button type="button" class="btn-secondary-large">Save as Draft</button>
                             <button type="submit" class="btn-primary-large">Submit Listing</button>
                         </div>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     </section>
@@ -393,8 +399,8 @@
                     <ul>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
                     </ul>
                 </div>
             </div>
@@ -846,5 +852,82 @@
             }
         }
     </style>
+<!-- Terms of Service Modal -->
+<div class="modal" id="termsModal">
+    <div class="modal-content">
+        <h2>Terms of Service</h2>
+        <p>
+            Welcome to LocalConnect. By listing your business on our platform, you agree to the following terms.
+        </p>
+
+        <h3>1. Business Information</h3>
+        <p>
+            You confirm that all information provided about your business is accurate, complete, and up to date.
+            Any false or misleading information may result in removal of your listing.
+        </p>
+
+        <h3>2. Verification & Approval</h3>
+        <p>
+            LocalConnect reserves the right to verify, approve, reject, or remove business listings at its discretion.
+        </p>
+
+        <h3>3. User Responsibilities</h3>
+        <p>
+            You are responsible for maintaining professional conduct, responding to customer inquiries, and
+            complying with applicable local laws.
+        </p>
+
+        <h3>4. Payments & Plans</h3>
+        <p>
+            Premium plans are optional. Fees once paid are non-refundable unless stated otherwise.
+        </p>
+
+        <h3>5. Termination</h3>
+        <p>
+            We reserve the right to suspend or terminate accounts that violate our policies.
+        </p>
+
+        <button class="btn-primary-large closeModal">Close</button>
+    </div>
+</div>
+
+<!-- Privacy Policy Modal -->
+<div class="modal" id="privacyModal">
+    <div class="modal-content">
+        <h2>Privacy Policy</h2>
+
+        <p>
+            Your privacy is important to us. This policy explains how LocalConnect collects and uses information.
+        </p>
+
+        <h3>1. Information We Collect</h3>
+        <p>
+            We collect business details such as name, contact information, location, and service descriptions.
+        </p>
+
+        <h3>2. Use of Information</h3>
+        <p>
+            Information is used to display listings, connect customers with businesses, and improve platform services.
+        </p>
+
+        <h3>3. Data Protection</h3>
+        <p>
+            We implement reasonable security measures to protect your data. However, no system is 100% secure.
+        </p>
+
+        <h3>4. Sharing of Data</h3>
+        <p>
+            We do not sell personal data. Information may be shared only when required by law.
+        </p>
+
+        <h3>5. Policy Updates</h3>
+        <p>
+            This policy may be updated periodically. Continued use of the platform implies acceptance of changes.
+        </p>
+
+        <button class="btn-primary-large closeModal">Close</button>
+    </div>
+</div>
+<script src="script-business.js"></script>
 </body>
 </html>

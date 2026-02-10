@@ -11,11 +11,12 @@
     <!-- Navigation Bar -->
     <nav class="navbar">
         <div class="nav-container">
-            <div class="logo">
+            <a href="index.html" class="logo">
                 <i class="fas fa-location-dot"></i>
                 <span>LocalConnect</span>
-            </div>
-            <ul class="nav-menu">
+            </a>
+            <ul class="nav-menu" id="navMenu">
+
                 <li><a href="index.html">Home</a></li>
                 <li><a href="services.html">Services</a></li>
                 <li><a href="about.html" class="active">About Us</a></li>
@@ -23,7 +24,7 @@
                 <li><a href="contact.html">Contact</a></li>
             </ul>
             <div class="nav-buttons">
-                <a href="#" class="btn-secondary">Sign In</a>
+                <a href="#" class="btn-secondary" id="signInBtn">Sign In</a>
                 <a href="business-listing.html" class="btn-primary">Add Business</a>
             </div>
         </div>
@@ -247,8 +248,8 @@
                     <ul>
                         <li><a href="about.html">About Us</a></li>
                         <li><a href="contact.html">Contact</a></li>
-                        <li><a href="#">Privacy Policy</a></li>
-                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
                     </ul>
                 </div>
             </div>
@@ -504,5 +505,7 @@
             }
         }
     </style>
+    <script src="script-about.js"></script>
+
 </body>
 </html>

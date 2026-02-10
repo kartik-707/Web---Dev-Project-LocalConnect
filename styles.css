@@ -39,6 +39,17 @@ body {
     z-index: 1000;
     padding: 15px 0;
 }
+.logo {
+    text-decoration: none;
+    color: inherit;
+}
+
+.logo:hover,
+.logo:focus,
+.logo:active {
+    text-decoration: none;
+    color: inherit;
+}
 
 .nav-container {
     max-width: 1200px;
@@ -690,4 +701,79 @@ body {
     .btn-large {
         width: 100%;
     }
+}
+.modal {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 9999;
+}
+
+.modal-content {
+    background: #fff;
+    padding: 30px;
+    max-width: 700px;
+    max-height: 80vh;
+    overflow-y: auto;
+    border-radius: 12px;
+}
+
+.terms-links {
+    margin-top: 10px;
+}
+
+.terms-links a {
+    color: var(--dark-stone);
+    font-weight: 600;
+}
+/* Legal Pages (Privacy Policy & Terms) */
+.legal-header {
+    background: linear-gradient(135deg, var(--dark-stone), var(--accent-brown));
+    color: var(--white);
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.legal-header h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+}
+
+.legal-header p {
+    opacity: 0.9;
+    font-size: 16px;
+}
+
+.legal-content {
+    padding: 60px 20px;
+    background: var(--stone-cream);
+}
+
+.legal-card {
+    max-width: 900px;
+    margin: 0 auto;
+    background: var(--white);
+    padding: 40px;
+    border-radius: 12px;
+    box-shadow: 0 4px 16px var(--shadow);
+}
+
+.legal-card h2 {
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-size: 22px;
+    color: var(--dark-stone);
+}
+
+.legal-card h2:first-child {
+    margin-top: 0;
+}
+
+.legal-card p {
+    color: var(--text-light);
+    line-height: 1.7;
+    font-size: 15px;
 }
