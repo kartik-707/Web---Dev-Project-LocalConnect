@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - LocalConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-location-dot"></i>
+                <span>LocalConnect</span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="business-listing.html">List Your Business</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="signin.html" class="btn-secondary">Sign In</a>
+                <a href="business-listing.html" class="btn-primary">Add Business</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sign Up Section -->
+    <section class="signin-section">
+        <div class="signin-container">
+            <!-- Left Side - Welcome Content -->
+            <div class="signin-left">
+                <div class="welcome-content">
+                    <h1>Join LocalConnect!</h1>
+                    <p>Create your account and start connecting with trusted local service professionals today.</p>
+                    
+                    <div class="benefits-list">
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Free account creation</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Access to verified professionals</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Save and track your bookings</span>
+                        </div>
+                        <div class="benefit-item">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Share reviews and experiences</span>
+                        </div>
+                    </div>
+
+                    <div class="illustration">
+                        <i class="fas fa-user-plus"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Sign Up Form -->
+            <div class="signin-right">
+                <div class="signin-form-container">
+                    <!-- Account Type Selector -->
+                    <div class="account-type-selector">
+                        <button class="account-type-btn active" data-type="customer">
+                            <i class="fas fa-user"></i>
+                            <span>Customer</span>
+                        </button>
+                        <button class="account-type-btn" data-type="business">
+                            <i class="fas fa-briefcase"></i>
+                            <span>Business</span>
+                        </button>
+                    </div>
+
+                    <div class="form-header">
+                        <h2 id="formTitle">Create Customer Account</h2>
+                        <p>Fill in your details to get started</p>
+                    </div>
+
+                    <form class="signin-form" id="signupForm">
+                        <div class="form-row-2col">
+                            <div class="form-group">
+                                <label for="firstName">First Name</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="firstName" placeholder="John" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="lastName">Last Name</label>
+                                <div class="input-with-icon">
+                                    <i class="fas fa-user"></i>
+                                    <input type="text" id="lastName" placeholder="Doe" required>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" id="email" placeholder="your.email@example.com" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" id="phone" placeholder="+91 98765 43210" required>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="password" placeholder="Create a strong password" required>
+                                <button type="button" class="toggle-password" id="togglePassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                            <div class="password-strength" id="passwordStrength">
+                                <div class="strength-bar"></div>
+                                <span class="strength-text"></span>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="confirmPassword">Confirm Password</label>
+                            <div class="input-with-icon">
+                                <i class="fas fa-lock"></i>
+                                <input type="password" id="confirmPassword" placeholder="Re-enter your password" required>
+                                <button type="button" class="toggle-password" id="toggleConfirmPassword">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-options">
+                            <label class="remember-me">
+                                <input type="checkbox" id="agreeTerms" required>
+                                <span>I agree to the <a href="#" id="termsLink">Terms of Service</a> and <a href="#" id="privacyLink">Privacy Policy</a></span>
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn-signin">
+                            <span>Create Account</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+
+                    <div class="divider">
+                        <span>OR</span>
+                    </div>
+
+                    <div class="social-signin">
+                        <button class="social-btn google-btn">
+                            <i class="fab fa-google"></i>
+                            <span>Sign up with Google</span>
+                        </button>
+                        <button class="social-btn facebook-btn">
+                            <i class="fab fa-facebook"></i>
+                            <span>Sign up with Facebook</span>
+                        </button>
+                    </div>
+
+                    <div class="signup-prompt">
+                        <p>Already have an account? <a href="signin.html" id="signinLink">Sign in here</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <i class="fas fa-location-dot"></i>
+                        <span>LocalConnect</span>
+                    </div>
+                    <p>Connecting communities with trusted local service professionals since 2020.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+
+                <div class="footer-col">
+                    <h4>For Users</h4>
+                    <ul>
+                        <li><a href="services.html">Find Services</a></li>
+                        <li><a href="#">How It Works</a></li>
+                        <li><a href="#">Write a Review</a></li>
+                        <li><a href="#">Help Center</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>For Businesses</h4>
+                    <ul>
+                        <li><a href="business-listing.html">List Your Business</a></li>
+                        <li><a href="#">Business Resources</a></li>
+                        <li><a href="#">Success Stories</a></li>
+                        <li><a href="#">Pricing</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4>Company</h4>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                        <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                        <li><a href="terms-of-service.html">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>&copy; 2026 LocalConnect. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <style>
+        .signin-section {
+            min-height: calc(100vh - 80px);
+            background: var(--stone-cream);
+            padding: 40px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .signin-container {
+            max-width: 1200px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--white);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 40px var(--shadow-hover);
+        }
+
+        .signin-left {
+            background: linear-gradient(135deg, var(--dark-stone) 0%, var(--accent-brown) 100%);
+            color: var(--white);
+            padding: 60px 50px;
+            display: flex;
+            align-items: center;
+        }
+
+        .welcome-content h1 {
+            font-size: 42px;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .welcome-content > p {
+            font-size: 18px;
+            opacity: 0.9;
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .benefits-list {
+            margin-bottom: 50px;
+        }
+
+        .benefit-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .benefit-item i {
+            font-size: 24px;
+            color: var(--stone-cream);
+        }
+
+        .illustration {
+            text-align: center;
+            margin-top: 40px;
+        }
+
+        .illustration i {
+            font-size: 120px;
+            opacity: 0.3;
+        }
+
+        .signin-right {
+            padding: 60px 50px;
+            display: flex;
+            align-items: center;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .signin-form-container {
+            width: 100%;
+        }
+
+        .account-type-selector {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .account-type-btn {
+            padding: 15px 20px;
+            background: var(--stone-cream);
+            border: 2px solid var(--light-stone);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            color: var(--text-light);
+        }
+
+        .account-type-btn i {
+            font-size: 28px;
+        }
+
+        .account-type-btn span {
+            font-weight: 600;
+            font-size: 15px;
+        }
+
+        .account-type-btn:hover {
+            background: var(--light-stone);
+            transform: translateY(-3px);
+        }
+
+        .account-type-btn.active {
+            background: var(--dark-stone);
+            color: var(--white);
+            border-color: var(--dark-stone);
+        }
+
+        .form-header {
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            font-size: 28px;
+            color: var(--text-dark);
+            margin-bottom: 8px;
+        }
+
+        .form-header p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .form-row-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .signin-form .form-group {
+            margin-bottom: 20px;
+        }
+
+        .signin-form label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 13px;
+        }
+
+        .input-with-icon {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .input-with-icon i {
+            position: absolute;
+            left: 15px;
+            color: var(--dark-stone);
+            font-size: 16px;
+        }
+
+        .input-with-icon input {
+            width: 100%;
+            padding: 12px 45px;
+            border: 2px solid var(--light-stone);
+            border-radius: 10px;
+            font-size: 14px;
+            background: var(--stone-cream);
+            color: var(--text-dark);
+            transition: all 0.3s;
+            outline: none;
+        }
+
+        .input-with-icon input:focus {
+            border-color: var(--dark-stone);
+            background: var(--white);
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-light);
+            cursor: pointer;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+
+        .toggle-password:hover {
+            color: var(--dark-stone);
+        }
+
+        .password-strength {
+            margin-top: 8px;
+        }
+
+        .strength-bar {
+            height: 4px;
+            background: var(--light-stone);
+            border-radius: 2px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .strength-bar::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 0;
+            transition: all 0.3s;
+        }
+
+        .strength-bar.weak::after {
+            width: 33%;
+            background: #ff4444;
+        }
+
+        .strength-bar.medium::after {
+            width: 66%;
+            background: #ffaa00;
+        }
+
+        .strength-bar.strong::after {
+            width: 100%;
+            background: #00C851;
+        }
+
+        .strength-text {
+            font-size: 12px;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .strength-text.weak {
+            color: #ff4444;
+        }
+
+        .strength-text.medium {
+            color: #ffaa00;
+        }
+
+        .strength-text.strong {
+            color: #00C851;
+        }
+
+        .form-options {
+            margin-bottom: 25px;
+        }
+
+        .remember-me {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            cursor: pointer;
+            color: var(--text-light);
+            font-size: 13px;
+            line-height: 1.5;
+        }
+
+        .remember-me input {
+            cursor: pointer;
+            margin-top: 2px;
+        }
+
+        .remember-me a {
+            color: var(--dark-stone);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .remember-me a:hover {
+            text-decoration: underline;
+        }
+
+        .btn-signin {
+            width: 100%;
+            padding: 14px;
+            background: var(--dark-stone);
+            color: var(--white);
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .btn-signin:hover {
+            background: var(--accent-brown);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px var(--shadow-hover);
+        }
+
+        .btn-signin i {
+            transition: transform 0.3s;
+        }
+
+        .btn-signin:hover i {
+            transform: translateX(5px);
+        }
+
+        .divider {
+            text-align: center;
+            margin: 25px 0;
+            position: relative;
+        }
+
+        .divider::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 50%;
+            width: 100%;
+            height: 1px;
+            background: var(--light-stone);
+        }
+
+        .divider span {
+            position: relative;
+            background: var(--white);
+            padding: 0 15px;
+            color: var(--text-light);
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .social-signin {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .social-btn {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid var(--light-stone);
+            border-radius: 10px;
+            background: var(--white);
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s;
+        }
+
+        .social-btn:hover {
+            background: var(--stone-cream);
+            transform: translateY(-2px);
+        }
+
+        .google-btn i {
+            color: #DB4437;
+            font-size: 18px;
+        }
+
+        .facebook-btn i {
+            color: #4267B2;
+            font-size: 18px;
+        }
+
+        .signup-prompt {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid var(--light-stone);
+        }
+
+        .signup-prompt p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .signup-prompt a {
+            color: var(--dark-stone);
+            font-weight: 700;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .signup-prompt a:hover {
+            color: var(--accent-brown);
+        }
+
+        @media (max-width: 968px) {
+            .signin-container {
+                grid-template-columns: 1fr;
+            }
+
+            .signin-left {
+                padding: 40px 30px;
+            }
+
+            .welcome-content h1 {
+                font-size: 32px;
+            }
+
+            .illustration {
+                display: none;
+            }
+
+            .signin-right {
+                padding: 40px 30px;
+                max-height: none;
+            }
+
+            .form-row-2col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .account-type-selector {
+                grid-template-columns: 1fr;
+            }
+
+            .signin-left, .signin-right {
+                padding: 30px 20px;
+            }
+
+            .form-header h2 {
+                font-size: 24px;
+            }
+        }
+    </style>
+
+    <script>
+        // Account Type Switcher
+        const accountTypeBtns = document.querySelectorAll('.account-type-btn');
+        const formTitle = document.getElementById('formTitle');
+        let currentAccountType = 'customer';
+
+        accountTypeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                accountTypeBtns.forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                
+                currentAccountType = this.getAttribute('data-type');
+                
+                if (currentAccountType === 'customer') {
+                    formTitle.textContent = 'Create Customer Account';
+                } else {
+                    formTitle.textContent = 'Create Business Account';
+                }
+            });
+        });
+
+        // Password Toggle
+        const togglePassword = document.getElementById('togglePassword');
+        const passwordInput = document.getElementById('password');
+
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
+            
+            const icon = this.querySelector('i');
+            if (type === 'text') {
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        const toggleConfirmPassword = document.getElementById('toggleConfirmPassword');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+
+        toggleConfirmPassword.addEventListener('click', function() {
+            const type = confirmPasswordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            confirmPasswordInput.setAttribute('type', type);
+            
+            const icon = this.querySelector('i');
+            if (type === 'text') {
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+
+        // Password Strength Checker
+        const passwordStrength = document.getElementById('passwordStrength');
+        const strengthBar = passwordStrength.querySelector('.strength-bar');
+        const strengthText = passwordStrength.querySelector('.strength-text');
+
+        passwordInput.addEventListener('input', function() {
+            const password = this.value;
+            let strength = 0;
+
+            if (password.length >= 8) strength++;
+            if (password.match(/[a-z]+/)) strength++;
+            if (password.match(/[A-Z]+/)) strength++;
+            if (password.match(/[0-9]+/)) strength++;
+            if (password.match(/[$@#&!]+/)) strength++;
+
+            strengthBar.className = 'strength-bar';
+            strengthText.className = 'strength-text';
+
+            if (strength <= 2) {
+                strengthBar.classList.add('weak');
+                strengthText.classList.add('weak');
+                strengthText.textContent = 'Weak password';
+            } else if (strength <= 4) {
+                strengthBar.classList.add('medium');
+                strengthText.classList.add('medium');
+                strengthText.textContent = 'Medium password';
+            } else {
+                strengthBar.classList.add('strong');
+                strengthText.classList.add('strong');
+                strengthText.textContent = 'Strong password';
+            }
+
+            if (password.length === 0) {
+                strengthBar.className = 'strength-bar';
+                strengthText.textContent = '';
+            }
+        });
+
+        // Form Submission
+        const signupForm = document.getElementById('signupForm');
+        signupForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const agreeTerms = document.getElementById('agreeTerms').checked;
+
+            // Validate passwords match
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+
+            // Validate password strength
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long!');
+                return;
+            }
+
+            if (!agreeTerms) {
+                alert('Please agree to the Terms of Service and Privacy Policy!');
+                return;
+            }
+
+            // Show loading state
+            const submitBtn = this.querySelector('.btn-signin');
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+            submitBtn.disabled = true;
+
+            // Simulate API call
+            setTimeout(() => {
+                alert(`Account Created Successfully!\n\nAccount Type: ${currentAccountType}\nName: ${firstName} ${lastName}\nEmail: ${email}\nPhone: ${phone}\n\nWelcome to LocalConnect!`);
+                
+                submitBtn.innerHTML = originalText;
+                submitBtn.disabled = false;
+                
+                // Redirect based on account type
+                if (currentAccountType === 'business') {
+                    window.location.href = 'business-listing.html';
+                } else {
+                    window.location.href = 'index.html';
+                }
+            }, 1500);
+        });
+
+        // Terms and Privacy Links
+        document.getElementById('termsLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Terms of Service\n\nYou will be redirected to our Terms of Service page.');
+            window.location.href = 'terms-of-service.html';
+        });
+
+        document.getElementById('privacyLink').addEventListener('click', function(e) {
+            e.preventDefault();
+            alert('Privacy Policy\n\nYou will be redirected to our Privacy Policy page.');
+            window.location.href = 'privacy-policy.html';
+        });
+
+        // Social Sign Up
+        const socialBtns = document.querySelectorAll('.social-btn');
+        socialBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const provider = this.classList.contains('google-btn') ? 'Google' : 'Facebook';
+                alert(`${provider} sign-up coming soon!\n\nYou will be redirected to ${provider} for authentication.`);
+            });
+        });
+    </script>
+</body>
+</html>
