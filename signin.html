@@ -573,7 +573,27 @@
         }
     </style>
 
+    <!-- Toast notifications -->
+    <div id="toastContainer" style="position:fixed;top:90px;right:20px;z-index:10000;display:flex;flex-direction:column;gap:10px;"></div>
+
     <script>
+        // Toast notification system
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            toast.style.cssText = `
+                padding: 16px 24px; border-radius: 10px; color: white; font-weight: 600;
+                font-size: 14px; display: flex; align-items: center; gap: 10px;
+                box-shadow: 0 6px 20px rgba(0,0,0,0.2); animation: slideIn 0.3s ease;
+                max-width: 380px;
+            `;
+            toast.style.background = type === 'success' ? '#2ecc71' : type === 'error' ? '#e74c3c' : '#f39c12';
+            const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-times-circle' : 'fa-info-circle';
+            toast.innerHTML = `<i class="fas ${icon}"></i> ${message}`;
+            container.appendChild(toast);
+            setTimeout(() => { toast.style.animation = 'slideOut 0.3s ease'; setTimeout(() => toast.remove(), 300); }, 4000);
+        }
+
         // Account Type Switcher
         const accountTypeBtns = document.querySelectorAll('.account-type-btn');
         const formTitle = document.getElementById('formTitle');
@@ -583,115 +603,90 @@
             btn.addEventListener('click', function() {
                 accountTypeBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
-                
                 currentAccountType = this.getAttribute('data-type');
-                
-                if (currentAccountType === 'customer') {
-                    formTitle.textContent = 'Sign In as Customer';
-                } else {
-                    formTitle.textContent = 'Sign In as Business';
-                }
-
-                // Add animation
+                formTitle.textContent = currentAccountType === 'customer' ? 'Sign In as Customer' : 'Sign In as Business';
                 formTitle.style.animation = 'fadeIn 0.3s ease';
-                setTimeout(() => {
-                    formTitle.style.animation = '';
-                }, 300);
+                setTimeout(() => { formTitle.style.animation = ''; }, 300);
             });
         });
 
         // Password Toggle
         const togglePassword = document.getElementById('togglePassword');
         const passwordInput = document.getElementById('password');
-
         togglePassword.addEventListener('click', function() {
             const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
             passwordInput.setAttribute('type', type);
-            
             const icon = this.querySelector('i');
-            if (type === 'text') {
-                icon.classList.remove('fa-eye');
-                icon.classList.add('fa-eye-slash');
-            } else {
-                icon.classList.remove('fa-eye-slash');
-                icon.classList.add('fa-eye');
-            }
+            icon.classList.toggle('fa-eye');
+            icon.classList.toggle('fa-eye-slash');
         });
 
-        // Form Submission
+        // Form Submission — Real API call
         const signinForm = document.getElementById('signinForm');
-        signinForm.addEventListener('submit', function(e) {
+        signinForm.addEventListener('submit', async function(e) {
             e.preventDefault();
             
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const rememberMe = document.getElementById('rememberMe').checked;
 
-            // Show loading state
             const submitBtn = this.querySelector('.btn-signin');
             const originalText = submitBtn.innerHTML;
             submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
             submitBtn.disabled = true;
 
-            // Simulate API call
-            setTimeout(() => {
-                alert(`Sign In Successful!\n\nAccount Type: ${currentAccountType}\nEmail: ${email}\nRemember Me: ${rememberMe}\n\nWelcome to LocalConnect!`);
-                
+            try {
+                const res = await fetch('/api/auth/signin', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    credentials: 'include',
+                    body: JSON.stringify({ email, password, accountType: currentAccountType })
+                });
+
+                const data = await res.json();
+
+                if (res.ok) {
+                    showToast(`Welcome back, ${data.user.firstName}! Redirecting...`, 'success');
+                    setTimeout(() => {
+                        window.location.href = currentAccountType === 'business' ? 'business-listing.html' : 'index.html';
+                    }, 1200);
+                } else {
+                    showToast(data.error || 'Sign in failed.', 'error');
+                    submitBtn.innerHTML = originalText;
+                    submitBtn.disabled = false;
+                }
+            } catch (err) {
+                showToast('Could not connect to server. Please try again.', 'error');
                 submitBtn.innerHTML = originalText;
                 submitBtn.disabled = false;
-                
-                // Redirect based on account type
-                if (currentAccountType === 'business') {
-                    window.location.href = 'business-listing.html';
-                } else {
-                    window.location.href = 'index.html';
-                }
-            }, 1500);
+            }
         });
 
         // Forgot Password
-        const forgotPassword = document.getElementById('forgotPassword');
-        forgotPassword.addEventListener('click', function(e) {
+        document.getElementById('forgotPassword').addEventListener('click', function(e) {
             e.preventDefault();
             const email = prompt('Enter your email address to reset password:');
             if (email) {
-                alert(`Password reset link has been sent to:\n${email}\n\nPlease check your inbox.`);
+                showToast(`Password reset link sent to ${email}`, 'success');
             }
         });
 
         // Social Sign In
-        const socialBtns = document.querySelectorAll('.social-btn');
-        socialBtns.forEach(btn => {
+        document.querySelectorAll('.social-btn').forEach(btn => {
             btn.addEventListener('click', function() {
                 const provider = this.classList.contains('google-btn') ? 'Google' : 'Facebook';
-                alert(`${provider} sign-in coming soon!\n\nYou will be redirected to ${provider} for authentication.`);
+                showToast(`${provider} sign-in coming soon!`, 'info');
             });
         });
 
-        // Sign Up Link
-        const signupLink = document.getElementById('signupLink');
-        signupLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            // Redirect to signup page (you'll need to create this)
-            alert('Sign Up page coming soon!\n\nYou can create an account as a Customer or Business.');
-            window.location.href = 'signup.html';
-        });
-
-        // Add fade in animation
+        // Animations
         const style = document.createElement('style');
         style.textContent = `
-            @keyframes fadeIn {
-                from {
-                    opacity: 0;
-                    transform: translateY(-10px);
-                }
-                to {
-                    opacity: 1;
-                    transform: translateY(0);
-                }
-            }
+            @keyframes fadeIn { from { opacity: 0; transform: translateY(-10px); } to { opacity: 1; transform: translateY(0); } }
+            @keyframes slideIn { from { transform: translateX(400px); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+            @keyframes slideOut { from { transform: translateX(0); opacity: 1; } to { transform: translateX(400px); opacity: 0; } }
         `;
         document.head.appendChild(style);
     </script>
+    <script src="auth-state.js"></script>
 </body>
 </html>

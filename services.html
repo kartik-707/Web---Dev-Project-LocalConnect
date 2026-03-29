@@ -43,40 +43,41 @@
             <div class="search-bar-section">
                 <div class="search-box-full">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="Search for services (e.g., engineer near me, plumber)" class="search-input-full">
+                    <input type="text" id="searchInput" placeholder="Search for services (e.g., plumber, electrician, cleaning)" class="search-input-full">
                 </div>
                 <div class="location-box-full">
                     <i class="fas fa-location-dot"></i>
-                    <input type="text" placeholder="Enter location" class="location-input-full">
-                    <button class="btn-location-map"><i class="fas fa-map"></i> Map</button>
+                    <input type="text" id="locationInput" placeholder="Enter location" class="location-input-full">
+                    <button class="btn-location-map" id="searchBtn"><i class="fas fa-search"></i> Search</button>
                 </div>
             </div>
 
             <div class="filter-section">
                 <div class="filter-left">
-                    <button class="filter-btn"><i class="fas fa-sliders"></i> Filters</button>
-                    <select class="filter-select">
-                        <option>All Categories</option>
-                        <option>Plumbing</option>
-                        <option>Electrical</option>
-                        <option>Engineering</option>
-                        <option>Cleaning</option>
-                        <option>Carpentry</option>
+                    <select class="filter-select" id="categoryFilter">
+                        <option value="">All Categories</option>
+                        <option value="Plumbing">Plumbing</option>
+                        <option value="Electrical">Electrical</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Cleaning">Cleaning</option>
+                        <option value="Carpentry">Carpentry</option>
+                        <option value="Painting">Painting</option>
                     </select>
-                    <select class="filter-select">
-                        <option>Rating: All</option>
-                        <option>5 Stars</option>
-                        <option>4+ Stars</option>
-                        <option>3+ Stars</option>
+                    <select class="filter-select" id="ratingFilter">
+                        <option value="">Rating: All</option>
+                        <option value="5">5 Stars</option>
+                        <option value="4">4+ Stars</option>
+                        <option value="3">3+ Stars</option>
                     </select>
                 </div>
                 <div class="filter-right">
-                    <span class="results-count">Showing 248 results</span>
-                    <select class="sort-select">
-                        <option>Sort by: Recommended</option>
-                        <option>Highest Rated</option>
-                        <option>Most Reviews</option>
-                        <option>Nearest</option>
+                    <span class="results-count" id="resultsCount">Loading...</span>
+                    <select class="sort-select" id="sortSelect">
+                        <option value="">Sort by: Recommended</option>
+                        <option value="rating">Highest Rated</option>
+                        <option value="reviews">Most Reviews</option>
+                        <option value="newest">Newest</option>
+                        <option value="name">Name (A-Z)</option>
                     </select>
                 </div>
             </div>
@@ -86,223 +87,28 @@
     <!-- Results Section -->
     <section class="results-section">
         <div class="container">
-            <div class="results-grid">
-                <!-- Result Card 1 -->
-                <div class="result-card">
-                    <div class="result-image">
-                        <img src="https://via.placeholder.com/300x200/8B7355/ffffff?text=Master+Plumbing" alt="Service">
-                        <span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>
-                        <span class="badge-featured">Featured</span>
-                    </div>
-                    <div class="result-content">
-                        <h3>Master Plumbing Co.</h3>
-                        <div class="rating-section">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span class="rating-text">5.0 (142 reviews)</span>
-                        </div>
-                        <p class="service-category"><i class="fas fa-wrench"></i> Plumbing Services</p>
-                        <p class="service-description">Professional plumbing services for residential and commercial properties. 24/7 emergency service available.</p>
-                        <p class="service-location"><i class="fas fa-location-dot"></i> 2.3 miles away • Downtown</p>
-                        <div class="service-features">
-                            <span class="feature-tag"><i class="fas fa-clock"></i> 24/7 Available</span>
-                            <span class="feature-tag"><i class="fas fa-certificate"></i> Licensed</span>
-                            <span class="feature-tag"><i class="fas fa-shield"></i> Insured</span>
-                        </div>
-                        <div class="result-actions">
-                            <button class="btn-secondary-small">View Profile</button>
-                            <button class="btn-primary-small"><i class="fas fa-phone"></i> Contact</button>
-                            <button class="btn-icon-only btn-map" title="View on Map"><i class="fas fa-map-location-dot"></i></button>
-                        </div>
-                    </div>
-                </div>
+            <div class="results-grid" id="resultsGrid">
+                <!-- Dynamically populated -->
+            </div>
 
-                <!-- Result Card 2 -->
-                <div class="result-card">
-                    <div class="result-image">
-                        <img src="https://via.placeholder.com/300x200/8B7355/ffffff?text=PowerLine+Electric" alt="Service">
-                        <span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>
-                    </div>
-                    <div class="result-content">
-                        <h3>PowerLine Electric Solutions</h3>
-                        <div class="rating-section">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span class="rating-text">4.9 (89 reviews)</span>
-                        </div>
-                        <p class="service-category"><i class="fas fa-bolt"></i> Electrical Services</p>
-                        <p class="service-description">Expert electricians providing residential and commercial electrical installations, repairs, and maintenance.</p>
-                        <p class="service-location"><i class="fas fa-location-dot"></i> 3.8 miles away • Westside</p>
-                        <div class="service-features">
-                            <span class="feature-tag"><i class="fas fa-certificate"></i> Licensed</span>
-                            <span class="feature-tag"><i class="fas fa-shield"></i> Insured</span>
-                            <span class="feature-tag"><i class="fas fa-award"></i> 15+ Years</span>
-                        </div>
-                        <div class="result-actions">
-                            <button class="btn-secondary-small">View Profile</button>
-                            <button class="btn-primary-small"><i class="fas fa-phone"></i> Contact</button>
-                            <button class="btn-icon-only btn-map" title="View on Map"><i class="fas fa-map-location-dot"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Result Card 3 -->
-                <div class="result-card">
-                    <div class="result-image">
-                        <img src="https://via.placeholder.com/300x200/8B7355/ffffff?text=TechPro+Engineering" alt="Service">
-                        <span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>
-                    </div>
-                    <div class="result-content">
-                        <h3>TechPro Engineering Services</h3>
-                        <div class="rating-section">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                            <span class="rating-text">4.8 (67 reviews)</span>
-                        </div>
-                        <p class="service-category"><i class="fas fa-gears"></i> Engineering Consulting</p>
-                        <p class="service-description">Professional engineering consulting for structural, mechanical, and electrical projects. Quality assured.</p>
-                        <p class="service-location"><i class="fas fa-location-dot"></i> 1.2 miles away • City Center</p>
-                        <div class="service-features">
-                            <span class="feature-tag"><i class="fas fa-certificate"></i> Certified</span>
-                            <span class="feature-tag"><i class="fas fa-users"></i> Team of 12</span>
-                        </div>
-                        <div class="result-actions">
-                            <button class="btn-secondary-small">View Profile</button>
-                            <button class="btn-primary-small"><i class="fas fa-phone"></i> Contact</button>
-                            <button class="btn-icon-only btn-map" title="View on Map"><i class="fas fa-map-location-dot"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Result Card 4 -->
-                <div class="result-card">
-                    <div class="result-image">
-                        <img src="https://via.placeholder.com/300x200/8B7355/ffffff?text=CleanPro+Services" alt="Service">
-                        <span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>
-                        <span class="badge-featured">Featured</span>
-                    </div>
-                    <div class="result-content">
-                        <h3>CleanPro Professional Cleaning</h3>
-                        <div class="rating-section">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span class="rating-text">5.0 (203 reviews)</span>
-                        </div>
-                        <p class="service-category"><i class="fas fa-broom"></i> Cleaning Services</p>
-                        <p class="service-description">Comprehensive cleaning services for homes and offices. Eco-friendly products and trained staff.</p>
-                        <p class="service-location"><i class="fas fa-location-dot"></i> 4.1 miles away • Eastside</p>
-                        <div class="service-features">
-                            <span class="feature-tag"><i class="fas fa-leaf"></i> Eco-Friendly</span>
-                            <span class="feature-tag"><i class="fas fa-shield"></i> Insured</span>
-                            <span class="feature-tag"><i class="fas fa-calendar"></i> Flexible Scheduling</span>
-                        </div>
-                        <div class="result-actions">
-                            <button class="btn-secondary-small">View Profile</button>
-                            <button class="btn-primary-small"><i class="fas fa-phone"></i> Contact</button>
-                            <button class="btn-icon-only btn-map" title="View on Map"><i class="fas fa-map-location-dot"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Result Card 5 -->
-                <div class="result-card">
-                    <div class="result-image">
-                        <img src="https://via.placeholder.com/300x200/8B7355/ffffff?text=Woodcraft+Carpentry" alt="Service">
-                        <span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>
-                    </div>
-                    <div class="result-content">
-                        <h3>Woodcraft Carpentry Masters</h3>
-                        <div class="rating-section">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                            </div>
-                            <span class="rating-text">4.7 (95 reviews)</span>
-                        </div>
-                        <p class="service-category"><i class="fas fa-hammer"></i> Carpentry & Woodwork</p>
-                        <p class="service-description">Custom carpentry and woodworking services. From furniture to full renovations, we do it all.</p>
-                        <p class="service-location"><i class="fas fa-location-dot"></i> 5.6 miles away • North District</p>
-                        <div class="service-features">
-                            <span class="feature-tag"><i class="fas fa-award"></i> 20+ Years</span>
-                            <span class="feature-tag"><i class="fas fa-certificate"></i> Licensed</span>
-                        </div>
-                        <div class="result-actions">
-                            <button class="btn-secondary-small">View Profile</button>
-                            <button class="btn-primary-small"><i class="fas fa-phone"></i> Contact</button>
-                            <button class="btn-icon-only btn-map" title="View on Map"><i class="fas fa-map-location-dot"></i></button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Result Card 6 -->
-                <div class="result-card">
-                    <div class="result-image">
-                        <img src="https://via.placeholder.com/300x200/8B7355/ffffff?text=ColorPro+Painting" alt="Service">
-                        <span class="badge-verified"><i class="fas fa-check-circle"></i> Verified</span>
-                    </div>
-                    <div class="result-content">
-                        <h3>ColorPro Painting Services</h3>
-                        <div class="rating-section">
-                            <div class="stars">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                            </div>
-                            <span class="rating-text">4.9 (118 reviews)</span>
-                        </div>
-                        <p class="service-category"><i class="fas fa-paint-roller"></i> Painting Services</p>
-                        <p class="service-description">Interior and exterior painting specialists. Quality finishes with attention to detail and customer satisfaction.</p>
-                        <p class="service-location"><i class="fas fa-location-dot"></i> 2.8 miles away • South Park</p>
-                        <div class="service-features">
-                            <span class="feature-tag"><i class="fas fa-shield"></i> Insured</span>
-                            <span class="feature-tag"><i class="fas fa-thumbs-up"></i> Satisfaction Guaranteed</span>
-                        </div>
-                        <div class="result-actions">
-                            <button class="btn-secondary-small">View Profile</button>
-                            <button class="btn-primary-small"><i class="fas fa-phone"></i> Contact</button>
-                            <button class="btn-icon-only btn-map" title="View on Map"><i class="fas fa-map-location-dot"></i></button>
-                        </div>
-                    </div>
-                </div>
+            <div id="noResults" style="display:none; text-align:center; padding:60px 20px;">
+                <i class="fas fa-search" style="font-size:60px; color:var(--light-stone); margin-bottom:20px;"></i>
+                <h3 style="color:var(--text-dark); margin-bottom:10px;">No businesses found</h3>
+                <p style="color:var(--text-light);">Try adjusting your search or filters</p>
             </div>
 
             <!-- Pagination -->
-            <div class="pagination">
-                <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
-                <button class="page-btn active">1</button>
-                <button class="page-btn">2</button>
-                <button class="page-btn">3</button>
-                <button class="page-btn">4</button>
-                <button class="page-btn">5</button>
-                <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
-            </div>
+            <div class="pagination" id="pagination"></div>
         </div>
     </section>
+
+    <!-- Contact Modal -->
+    <div id="contactModal" class="contact-modal" style="display:none;">
+        <div class="contact-modal-content">
+            <button class="contact-modal-close" id="closeContactModal">&times;</button>
+            <div id="contactModalBody"></div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="footer">
@@ -321,7 +127,6 @@
                         <a href="#"><i class="fab fa-linkedin"></i></a>
                     </div>
                 </div>
-
                 <div class="footer-col">
                     <h4>For Users</h4>
                     <ul>
@@ -331,7 +136,6 @@
                         <li><a href="#">Help Center</a></li>
                     </ul>
                 </div>
-
                 <div class="footer-col">
                     <h4>For Businesses</h4>
                     <ul>
@@ -341,7 +145,6 @@
                         <li><a href="#">Pricing</a></li>
                     </ul>
                 </div>
-
                 <div class="footer-col">
                     <h4>Company</h4>
                     <ul>
@@ -352,7 +155,6 @@
                     </ul>
                 </div>
             </div>
-
             <div class="footer-bottom">
                 <p>&copy; 2026 LocalConnect. All rights reserved.</p>
             </div>
@@ -366,345 +168,80 @@
             padding: 60px 20px;
             text-align: center;
         }
+        .page-header h1 { font-size: 42px; margin-bottom: 10px; }
+        .search-filter { background: var(--white); padding: 30px 20px; box-shadow: 0 2px 10px var(--shadow); }
+        .search-bar-section { display: grid; grid-template-columns: 2fr 1fr; gap: 15px; margin-bottom: 20px; }
+        .search-box-full, .location-box-full { display: flex; align-items: center; gap: 12px; padding: 14px 18px; background: var(--stone-cream); border-radius: 8px; }
+        .search-box-full i, .location-box-full i { color: var(--dark-stone); font-size: 18px; }
+        .search-input-full, .location-input-full { flex: 1; border: none; background: transparent; font-size: 15px; color: var(--text-dark); outline: none; }
+        .btn-location-map { padding: 8px 16px; background: var(--dark-stone); color: var(--white); border: none; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .btn-location-map:hover { background: var(--accent-brown); }
+        .filter-section { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; }
+        .filter-left, .filter-right { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+        .filter-select, .sort-select { padding: 10px 16px; background: var(--stone-cream); color: var(--text-dark); border: 2px solid var(--light-stone); border-radius: 8px; font-weight: 500; cursor: pointer; outline: none; }
+        .results-count { color: var(--text-light); font-weight: 600; }
+        .results-section { padding: 50px 20px; min-height: 400px; }
+        .results-grid { display: grid; gap: 30px; margin-bottom: 40px; }
+        .result-card { display: grid; grid-template-columns: 300px 1fr; background: var(--white); border-radius: 12px; overflow: hidden; box-shadow: 0 2px 12px var(--shadow); transition: all 0.3s; }
+        .result-card:hover { box-shadow: 0 8px 24px var(--shadow-hover); transform: translateY(-4px); }
+        .result-image { position: relative; height: 100%; min-height: 220px; background: var(--stone-cream); display: flex; align-items: center; justify-content: center; }
+        .result-image .placeholder-icon { font-size: 60px; color: var(--light-stone); }
+        .result-image img { width: 100%; height: 100%; object-fit: cover; }
+        .badge-verified { position: absolute; top: 15px; right: 15px; background: var(--dark-stone); color: var(--white); padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; display: flex; align-items: center; gap: 4px; }
+        .result-content { padding: 25px; }
+        .result-content h3 { font-size: 22px; margin-bottom: 12px; color: var(--text-dark); }
+        .rating-section { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; }
+        .stars { display: flex; gap: 3px; }
+        .stars i { color: #FFA500; font-size: 14px; }
+        .stars i.empty { color: #ddd; }
+        .rating-text { color: var(--text-light); font-size: 14px; font-weight: 600; }
+        .service-category { display: flex; align-items: center; gap: 8px; color: var(--dark-stone); font-weight: 600; margin-bottom: 10px; }
+        .service-description { color: var(--text-light); margin-bottom: 12px; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+        .service-location { display: flex; align-items: center; gap: 6px; color: var(--text-light); margin-bottom: 15px; font-size: 14px; }
+        .service-features { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
+        .feature-tag { display: flex; align-items: center; gap: 5px; padding: 6px 12px; background: var(--stone-cream); color: var(--accent-brown); border-radius: 20px; font-size: 12px; font-weight: 600; }
+        .result-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+        .btn-primary-small, .btn-secondary-small { padding: 10px 20px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 14px; }
+        .btn-primary-small { background: var(--dark-stone); color: var(--white); }
+        .btn-primary-small:hover { background: var(--accent-brown); }
+        .btn-secondary-small { background: var(--stone-cream); color: var(--accent-brown); }
+        .btn-secondary-small:hover { background: var(--light-stone); }
+        .btn-icon-only { width: 42px; height: 42px; padding: 0; border: none; border-radius: 8px; background: var(--stone-cream); color: var(--dark-stone); cursor: pointer; transition: all 0.3s; display: flex; align-items: center; justify-content: center; }
+        .btn-icon-only:hover { background: var(--light-stone); }
+        .pagination { display: flex; justify-content: center; gap: 10px; margin-top: 40px; }
+        .page-btn { width: 42px; height: 42px; border: 2px solid var(--light-stone); background: var(--white); color: var(--text-dark); border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; }
+        .page-btn:hover:not(:disabled) { background: var(--stone-cream); }
+        .page-btn.active { background: var(--dark-stone); color: var(--white); border-color: var(--dark-stone); }
+        .page-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
-        .page-header h1 {
-            font-size: 42px;
-            margin-bottom: 10px;
-        }
+        /* Contact Modal */
+        .contact-modal { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 10000; }
+        .contact-modal-content { background: var(--white); border-radius: 16px; padding: 40px; max-width: 480px; width: 90%; position: relative; animation: modalSlideIn 0.3s ease; }
+        .contact-modal-close { position: absolute; top: 15px; right: 20px; font-size: 28px; background: none; border: none; cursor: pointer; color: var(--text-light); transition: color 0.2s; }
+        .contact-modal-close:hover { color: var(--text-dark); }
+        .contact-info-row { display: flex; align-items: center; gap: 15px; padding: 16px 0; border-bottom: 1px solid var(--stone-cream); }
+        .contact-info-row:last-child { border-bottom: none; }
+        .contact-info-row i { width: 44px; height: 44px; background: var(--stone-cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; color: var(--dark-stone); flex-shrink: 0; }
+        .contact-info-row .info-text { flex: 1; }
+        .contact-info-row .info-label { font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 2px; }
+        .contact-info-row .info-value { font-size: 16px; font-weight: 600; color: var(--text-dark); }
+        .contact-info-row .info-value a { color: var(--dark-stone); text-decoration: none; }
+        .contact-info-row .info-value a:hover { text-decoration: underline; }
 
-        .search-filter {
-            background: var(--white);
-            padding: 30px 20px;
-            box-shadow: 0 2px 10px var(--shadow);
-        }
-
-        .search-bar-section {
-            display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
-        .search-box-full, .location-box-full {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 14px 18px;
-            background: var(--stone-cream);
-            border-radius: 8px;
-        }
-
-        .search-box-full i, .location-box-full i {
-            color: var(--dark-stone);
-            font-size: 18px;
-        }
-
-        .search-input-full, .location-input-full {
-            flex: 1;
-            border: none;
-            background: transparent;
-            font-size: 15px;
-            color: var(--text-dark);
-            outline: none;
-        }
-
-        .btn-location-map {
-            padding: 8px 16px;
-            background: var(--dark-stone);
-            color: var(--white);
-            border: none;
-            border-radius: 6px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-location-map:hover {
-            background: var(--accent-brown);
-        }
-
-        .filter-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
-        }
-
-        .filter-left, .filter-right {
-            display: flex;
-            gap: 12px;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .filter-btn {
-            padding: 10px 20px;
-            background: var(--stone-cream);
-            color: var(--accent-brown);
-            border: 2px solid var(--light-stone);
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .filter-btn:hover {
-            background: var(--light-stone);
-        }
-
-        .filter-select, .sort-select {
-            padding: 10px 16px;
-            background: var(--stone-cream);
-            color: var(--text-dark);
-            border: 2px solid var(--light-stone);
-            border-radius: 8px;
-            font-weight: 500;
-            cursor: pointer;
-            outline: none;
-        }
-
-        .results-count {
-            color: var(--text-light);
-            font-weight: 600;
-        }
-
-        .results-section {
-            padding: 50px 20px;
-        }
-
-        .results-grid {
-            display: grid;
-            gap: 30px;
-            margin-bottom: 40px;
-        }
-
-        .result-card {
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            background: var(--white);
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 2px 12px var(--shadow);
-            transition: all 0.3s;
-        }
-
-        .result-card:hover {
-            box-shadow: 0 8px 24px var(--shadow-hover);
-            transform: translateY(-4px);
-        }
-
-        .result-image {
-            position: relative;
-            height: 100%;
-        }
-
-        .result-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .badge-featured {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            background: #FFA500;
-            color: var(--white);
-            padding: 6px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-        }
-
-        .result-content {
-            padding: 25px;
-        }
-
-        .result-content h3 {
-            font-size: 22px;
-            margin-bottom: 12px;
-            color: var(--text-dark);
-        }
-
-        .rating-section {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-
-        .stars {
-            display: flex;
-            gap: 3px;
-        }
-
-        .stars i {
-            color: #FFA500;
-            font-size: 14px;
-        }
-
-        .rating-text {
-            color: var(--text-light);
-            font-size: 14px;
-            font-weight: 600;
-        }
-
-        .service-category {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: var(--dark-stone);
-            font-weight: 600;
-            margin-bottom: 10px;
-        }
-
-        .service-description {
-            color: var(--text-light);
-            margin-bottom: 12px;
-            line-height: 1.6;
-        }
-
-        .service-location {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--text-light);
-            margin-bottom: 15px;
-            font-size: 14px;
-        }
-
-        .service-features {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
-
-        .feature-tag {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            padding: 6px 12px;
-            background: var(--stone-cream);
-            color: var(--accent-brown);
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .result-actions {
-            display: flex;
-            gap: 10px;
-        }
-
-        .btn-primary-small, .btn-secondary-small {
-            padding: 10px 20px;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .btn-primary-small {
-            background: var(--dark-stone);
-            color: var(--white);
-        }
-
-        .btn-primary-small:hover {
-            background: var(--accent-brown);
-        }
-
-        .btn-secondary-small {
-            background: var(--stone-cream);
-            color: var(--accent-brown);
-        }
-
-        .btn-secondary-small:hover {
-            background: var(--light-stone);
-        }
-
-        .btn-icon-only {
-            width: 42px;
-            height: 42px;
-            padding: 0;
-            border: none;
-            border-radius: 8px;
-            background: var(--stone-cream);
-            color: var(--dark-stone);
-            cursor: pointer;
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .btn-icon-only:hover {
-            background: var(--light-stone);
-        }
-
-        .pagination {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 40px;
-        }
-
-        .page-btn {
-            width: 42px;
-            height: 42px;
-            border: 2px solid var(--light-stone);
-            background: var(--white);
-            color: var(--text-dark);
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .page-btn:hover:not(:disabled) {
-            background: var(--stone-cream);
-        }
-
-        .page-btn.active {
-            background: var(--dark-stone);
-            color: var(--white);
-            border-color: var(--dark-stone);
-        }
-
-        .page-btn:disabled {
-            opacity: 0.4;
-            cursor: not-allowed;
-        }
+        @keyframes modalSlideIn { from { transform: translateY(-30px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
 
         @media (max-width: 968px) {
-            .result-card {
-                grid-template-columns: 1fr;
-            }
-
-            .result-image {
-                height: 200px;
-            }
+            .result-card { grid-template-columns: 1fr; }
+            .result-image { height: 200px; min-height: auto; }
         }
-
         @media (max-width: 768px) {
-            .search-bar-section {
-                grid-template-columns: 1fr;
-            }
-
-            .filter-section {
-                flex-direction: column;
-                align-items: stretch;
-            }
-
-            .filter-left, .filter-right {
-                width: 100%;
-                justify-content: space-between;
-            }
+            .search-bar-section { grid-template-columns: 1fr; }
+            .filter-section { flex-direction: column; align-items: stretch; }
+            .filter-left, .filter-right { width: 100%; justify-content: space-between; }
         }
     </style>
-    <script src="script-services.js"></script>
 
+    <script src="script-services-dynamic.js"></script>
+    <script src="auth-state.js"></script>
 </body>
 </html>

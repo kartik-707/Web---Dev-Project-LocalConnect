@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Profile - LocalConnect</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="index.html" class="logo">
+                <i class="fas fa-location-dot"></i>
+                <span>LocalConnect</span>
+            </a>
+            <ul class="nav-menu" id="navMenu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="services.html">Services</a></li>
+                <li><a href="about.html">About Us</a></li>
+                <li><a href="business-listing.html">List Your Business</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+            <div class="nav-buttons">
+                <a href="signin.html" class="btn-secondary">Sign In</a>
+                <a href="business-listing.html" class="btn-primary">Add Business</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Profile Content — filled by JS -->
+    <div id="profileContent">
+        <div style="text-align:center; padding:100px 20px;">
+            <i class="fas fa-spinner fa-spin" style="font-size:40px; color:var(--dark-stone);"></i>
+            <p style="margin-top:20px; color:var(--text-light);">Loading business profile...</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col">
+                    <div class="footer-logo">
+                        <i class="fas fa-location-dot"></i>
+                        <span>LocalConnect</span>
+                    </div>
+                    <p>Connecting communities with trusted local service professionals since 2020.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+                <div class="footer-col"><h4>For Users</h4><ul>
+                    <li><a href="services.html">Find Services</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Help Center</a></li>
+                </ul></div>
+                <div class="footer-col"><h4>For Businesses</h4><ul>
+                    <li><a href="business-listing.html">List Your Business</a></li>
+                    <li><a href="#">Business Resources</a></li>
+                </ul></div>
+                <div class="footer-col"><h4>Company</h4><ul>
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="contact.html">Contact</a></li>
+                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
+                    <li><a href="terms-of-service.html">Terms of Service</a></li>
+                </ul></div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2026 LocalConnect. All rights reserved.</p></div>
+        </div>
+    </footer>
+
+    <style>
+        .profile-hero {
+            background: linear-gradient(135deg, var(--dark-stone) 0%, var(--accent-brown) 100%);
+            color: var(--white);
+            padding: 60px 20px 40px;
+        }
+        .profile-hero .container { max-width: 1100px; margin: 0 auto; }
+        .profile-hero h1 { font-size: 38px; margin-bottom: 10px; }
+        .profile-meta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 15px; }
+        .profile-meta span { display: flex; align-items: center; gap: 6px; opacity: 0.9; font-size: 15px; }
+        .profile-stars { display: flex; gap: 3px; }
+        .profile-stars i { color: #FFA500; }
+        .profile-badge { background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; }
+
+        .profile-body { max-width: 1100px; margin: 0 auto; padding: 40px 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
+        
+        .profile-main h2 { font-size: 24px; color: var(--text-dark); margin-bottom: 20px; border-bottom: 2px solid var(--stone-cream); padding-bottom: 10px; }
+        .profile-main h2 i { margin-right: 8px; color: var(--dark-stone); }
+        .profile-description { color: var(--text-light); line-height: 1.8; font-size: 16px; margin-bottom: 40px; }
+
+        .services-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
+        .service-tag { padding: 10px 20px; background: var(--stone-cream); color: var(--accent-brown); border-radius: 25px; font-weight: 600; font-size: 14px; }
+
+        .hours-table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
+        .hours-table td { padding: 12px 16px; border-bottom: 1px solid var(--stone-cream); color: var(--text-dark); font-size: 15px; }
+        .hours-table td:first-child { font-weight: 600; width: 140px; }
+        .hours-table tr.today { background: var(--stone-cream); border-radius: 8px; }
+        .hours-closed { color: #e74c3c; font-weight: 600; }
+
+        .photo-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-bottom: 40px; }
+        .photo-gallery img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; cursor: pointer; transition: transform 0.3s; }
+        .photo-gallery img:hover { transform: scale(1.03); }
+        .photo-gallery .no-photos { grid-column: 1/-1; text-align: center; padding: 40px; background: var(--stone-cream); border-radius: 12px; color: var(--text-light); }
+
+        .profile-sidebar .sidebar-card { background: var(--white); border-radius: 12px; box-shadow: 0 2px 12px var(--shadow); padding: 30px; margin-bottom: 25px; }
+        .sidebar-card h3 { font-size: 20px; margin-bottom: 20px; color: var(--text-dark); }
+        .sidebar-card h3 i { margin-right: 8px; color: var(--dark-stone); }
+
+        .contact-row { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--stone-cream); }
+        .contact-row:last-of-type { border-bottom: none; }
+        .contact-row i { width: 40px; height: 40px; background: var(--stone-cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--dark-stone); flex-shrink: 0; }
+        .contact-row .c-label { font-size: 12px; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.5px; }
+        .contact-row .c-value { font-weight: 600; color: var(--text-dark); margin-top: 2px; }
+        .contact-row a { color: var(--dark-stone); text-decoration: none; }
+        .contact-row a:hover { text-decoration: underline; }
+
+        .btn-block { display: block; width: 100%; padding: 14px; text-align: center; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s; margin-bottom: 10px; text-decoration: none; }
+        .btn-block-primary { background: var(--dark-stone); color: var(--white); }
+        .btn-block-primary:hover { background: var(--accent-brown); transform: translateY(-2px); }
+        .btn-block-secondary { background: var(--stone-cream); color: var(--accent-brown); }
+        .btn-block-secondary:hover { background: var(--light-stone); }
+
+        .certs-list { list-style: none; padding: 0; }
+        .certs-list li { padding: 10px 0; border-bottom: 1px solid var(--stone-cream); color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
+        .certs-list li i { color: #2ecc71; }
+
+        .back-link { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; margin-bottom: 20px; transition: color 0.2s; }
+        .back-link:hover { color: white; }
+
+        @media (max-width: 968px) {
+            .profile-body { grid-template-columns: 1fr; }
+        }
+    </style>
+
+    <script>
+        async function loadProfile() {
+            const params = new URLSearchParams(window.location.search);
+            const id = params.get('id');
+            if (!id) {
+                document.getElementById('profileContent').innerHTML = '<div style="text-align:center;padding:100px 20px;"><h2>Business not found</h2><p><a href="services.html">← Back to Services</a></p></div>';
+                return;
+            }
+
+            try {
+                const res = await fetch(`/api/business/listing/${id}`);
+                if (!res.ok) throw new Error('Not found');
+                const data = await res.json();
+                const biz = data.business;
+
+                document.title = `${biz.businessName} - LocalConnect`;
+
+                const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const todayName = daysOfWeek[new Date().getDay()];
+
+                // Stars
+                let starsHtml = '';
+                for (let i = 1; i <= 5; i++) {
+                    if (biz.rating >= i) starsHtml += '<i class="fas fa-star"></i>';
+                    else if (biz.rating >= i - 0.5) starsHtml += '<i class="fas fa-star-half-alt"></i>';
+                    else starsHtml += '<i class="far fa-star" style="opacity:0.5"></i>';
+                }
+
+                // Services
+                const servicesHtml = (biz.services || []).map(s => `<span class="service-tag">${esc(s)}</span>`).join('');
+
+                // Hours
+                let hoursHtml = '';
+                const orderedDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                for (const day of orderedDays) {
+                    const val = (biz.hours || {})[day] || 'Not set';
+                    const isToday = day === todayName;
+                    const isClosed = val.toLowerCase() === 'closed';
+                    hoursHtml += `<tr class="${isToday ? 'today' : ''}"><td>${day}${isToday ? ' (Today)' : ''}</td><td class="${isClosed ? 'hours-closed' : ''}">${esc(val)}</td></tr>`;
+                }
+
+                // Photos
+                let photosHtml = '';
+                if (biz.photos && biz.photos.length > 0) {
+                    photosHtml = biz.photos.map(p => `<img src="/uploads/${p.filename}" alt="${esc(p.originalName)}">`).join('');
+                } else {
+                    photosHtml = '<div class="no-photos"><i class="fas fa-camera" style="font-size:40px;margin-bottom:15px;display:block;"></i>No photos uploaded yet</div>';
+                }
+
+                // Certs
+                const certLines = (biz.certifications || '').split(',').map(c => c.trim()).filter(c => c);
+                const certsHtml = certLines.length > 0
+                    ? `<ul class="certs-list">${certLines.map(c => `<li><i class="fas fa-check-circle"></i> ${esc(c)}</li>`).join('')}</ul>`
+                    : '<p style="color:var(--text-light);">None listed</p>';
+
+                const fullAddr = [biz.address, biz.city, biz.state, biz.zipcode].filter(Boolean).join(', ');
+                const mapsUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(fullAddr)}`;
+
+                document.getElementById('profileContent').innerHTML = `
+                    <section class="profile-hero">
+                        <div class="container">
+                            <a href="services.html" class="back-link"><i class="fas fa-arrow-left"></i> Back to Services</a>
+                            <h1>${esc(biz.businessName)}</h1>
+                            <div class="profile-meta">
+                                <span class="profile-stars">${starsHtml}</span>
+                                <span>${biz.rating.toFixed(1)} (${biz.reviewCount} reviews)</span>
+                                <span><i class="fas fa-tag"></i> ${esc(biz.category)}</span>
+                                <span><i class="fas fa-location-dot"></i> ${esc(biz.city || '')}${biz.state ? ', ' + esc(biz.state) : ''}</span>
+                                <span class="profile-badge"><i class="fas fa-check-circle"></i> Verified</span>
+                            </div>
+                        </div>
+                    </section>
+
+                    <div class="profile-body">
+                        <div class="profile-main">
+                            <h2><i class="fas fa-info-circle"></i> About</h2>
+                            <p class="profile-description">${esc(biz.description || 'No description provided.')}</p>
+
+                            <h2><i class="fas fa-concierge-bell"></i> Services Offered</h2>
+                            <div class="services-tags">${servicesHtml || '<p style="color:var(--text-light);">No services listed</p>'}</div>
+
+                            <h2><i class="fas fa-camera"></i> Photos</h2>
+                            <div class="photo-gallery">${photosHtml}</div>
+
+                            <h2><i class="fas fa-clock"></i> Business Hours</h2>
+                            <table class="hours-table">${hoursHtml}</table>
+                        </div>
+
+                        <div class="profile-sidebar">
+                            <div class="sidebar-card">
+                                <h3><i class="fas fa-address-book"></i> Contact</h3>
+                                <div class="contact-row">
+                                    <i class="fas fa-phone"></i>
+                                    <div><div class="c-label">Phone</div><div class="c-value"><a href="tel:${biz.phone}">${esc(biz.phone)}</a></div></div>
+                                </div>
+                                <div class="contact-row">
+                                    <i class="fas fa-envelope"></i>
+                                    <div><div class="c-label">Email</div><div class="c-value"><a href="mailto:${biz.email}">${esc(biz.email)}</a></div></div>
+                                </div>
+                                ${biz.website ? `<div class="contact-row"><i class="fas fa-globe"></i><div><div class="c-label">Website</div><div class="c-value"><a href="${biz.website}" target="_blank">${esc(biz.website)}</a></div></div></div>` : ''}
+                                <div style="margin-top:20px;">
+                                    <a href="tel:${biz.phone}" class="btn-block btn-block-primary"><i class="fas fa-phone"></i> Call Now</a>
+                                    <a href="mailto:${biz.email}" class="btn-block btn-block-secondary"><i class="fas fa-envelope"></i> Send Email</a>
+                                </div>
+                            </div>
+
+                            <div class="sidebar-card">
+                                <h3><i class="fas fa-location-dot"></i> Location</h3>
+                                <p style="color:var(--text-dark);line-height:1.6;margin-bottom:8px;">${esc(fullAddr)}</p>
+                                ${biz.serviceArea ? `<p style="color:var(--text-light);font-size:14px;margin-bottom:15px;"><i class="fas fa-map-marked-alt"></i> Service Area: ${esc(biz.serviceArea)}</p>` : ''}
+                                <a href="${mapsUrl}" target="_blank" class="btn-block btn-block-primary"><i class="fas fa-map-location-dot"></i> Open in Google Maps</a>
+                            </div>
+
+                            ${certLines.length > 0 ? `
+                            <div class="sidebar-card">
+                                <h3><i class="fas fa-certificate"></i> Certifications</h3>
+                                ${certsHtml}
+                            </div>` : ''}
+
+                            ${biz.yearsInBusiness ? `
+                            <div class="sidebar-card">
+                                <h3><i class="fas fa-briefcase"></i> Experience</h3>
+                                <p style="font-size:36px;font-weight:700;color:var(--dark-stone);margin-bottom:5px;">${biz.yearsInBusiness}+</p>
+                                <p style="color:var(--text-light);">Years in Business</p>
+                            </div>` : ''}
+                        </div>
+                    </div>
+                `;
+            } catch (err) {
+                document.getElementById('profileContent').innerHTML = '<div style="text-align:center;padding:100px 20px;"><h2 style="color:var(--text-dark);">Business not found</h2><p style="color:var(--text-light);margin-top:10px;">This listing may have been removed.</p><p style="margin-top:20px;"><a href="services.html" class="btn-primary" style="text-decoration:none;padding:12px 24px;">← Browse Services</a></p></div>';
+            }
+        }
+
+        function esc(text) {
+            if (!text) return '';
+            const d = document.createElement('div');
+            d.textContent = text;
+            return d.innerHTML;
+        }
+
+        loadProfile();
+    </script>
+    <script src="auth-state.js"></script>
+</body>
+</html>

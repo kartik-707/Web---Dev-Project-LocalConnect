@@ -39,13 +39,13 @@
             <div class="search-container">
                 <div class="search-box">
                     <i class="fas fa-search"></i>
-                    <input type="text" placeholder="What service do you need? (e.g., Plumber, Electrician)" class="search-input">
+                    <input type="text" id="searchInput" placeholder="What service do you need? (e.g., Plumber, Electrician)" class="search-input">
                 </div>
                 <div class="location-box">
                     <i class="fas fa-location-dot"></i>
-                    <input type="text" placeholder="City or ZIP code" class="location-input">
+                    <input type="text" id="locationInput" placeholder="City or ZIP code" class="location-input">
                 </div>
-                <button class="search-btn">Search</button>
+                <button class="search-btn" id="searchBtn">Search</button>
             </div>
 
             <!-- Popular Searches -->
@@ -369,6 +369,7 @@
         </div>
     </footer>
     <script src="script-index.js"></script>
+    <script src="auth-state.js"></script>
 
 </body>
 </html>

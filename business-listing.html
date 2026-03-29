@@ -90,11 +90,11 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Business Name *</label>
-                                <input type="text" placeholder="Enter your business name" class="form-input">
+                                <input type="text" id="businessName" placeholder="Enter your business name" class="form-input">
                             </div>
                             <div class="form-group">
                                 <label>Business Category *</label>
-                                <select class="form-input">
+                                <select id="category" class="form-input">
                                     <option value="">Select a category</option>
                                     <option>Plumbing</option>
                                     <option>Electrical</option>
@@ -112,11 +112,11 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Business Email *</label>
-                                <input type="email" placeholder="contact@yourbusiness.com" class="form-input">
+                                <input type="email" id="email" placeholder="contact@yourbusiness.com" class="form-input">
                             </div>
                             <div class="form-group">
                                 <label>Phone Number *</label>
-                                <input type="tel" placeholder="+91 00000-00000" class="form-input">
+                                <input type="tel" id="phone" placeholder="+91 00000-00000" class="form-input">
                             </div>
                         </div>
 
@@ -132,27 +132,27 @@
                         <h3><i class="fas fa-location-dot"></i> Location Information</h3>
                         <div class="form-group">
                             <label>Street Address *</label>
-                            <input type="text" placeholder="123 Main Street" class="form-input">
+                            <input type="text" id="address" placeholder="123 Main Street" class="form-input">
                         </div>
 
                         <div class="form-row">
                             <div class="form-group">
                                 <label>City *</label>
-                                <input type="text" placeholder="Enter city" class="form-input">
+                                <input type="text" id="city" placeholder="Enter city" class="form-input">
                             </div>
                             <div class="form-group">
                                 <label>State/Province *</label>
-                                <input type="text" placeholder="Enter state" class="form-input">
+                                <input type="text" id="state" placeholder="Enter state" class="form-input">
                             </div>
                             <div class="form-group">
                                 <label>ZIP/Postal Code *</label>
-                                <input type="text" placeholder="12345" class="form-input">
+                                <input type="text" id="zipcode" placeholder="12345" class="form-input">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label>Service Area</label>
-                            <input type="text" placeholder="e.g., Downtown, Westside, City-wide" class="form-input">
+                            <input type="text" id="serviceArea" placeholder="e.g., Downtown, Westside, City-wide" class="form-input">
                             <span class="form-helper">Specify the areas where you provide services</span>
                         </div>
                     </div>
@@ -169,17 +169,17 @@
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Website URL</label>
-                                <input type="url" placeholder="https://www.yourbusiness.com" class="form-input">
+                                <input type="url" id="website" placeholder="https://www.yourbusiness.com" class="form-input">
                             </div>
                             <div class="form-group">
                                 <label>Years in Business</label>
-                                <input type="number" placeholder="5" class="form-input">
+                                <input type="number" id="yearsInBusiness" placeholder="5" class="form-input">
                             </div>
                         </div>
 
                         <div class="form-group">
                             <label>Certifications & Licenses</label>
-                            <textarea placeholder="List any relevant certifications, licenses, or credentials..." class="form-textarea" rows="3"></textarea>
+                            <textarea id="certifications" placeholder="List any relevant certifications, licenses, or credentials..." class="form-textarea" rows="3"></textarea>
                         </div>
 
                         <div class="form-group">
@@ -198,13 +198,15 @@
                     <!-- Photos Upload -->
                     <div class="form-section">
                         <h3><i class="fas fa-camera"></i> Business Photos</h3>
-                        <div class="upload-area">
+                        <div class="upload-area" id="uploadArea">
                             <i class="fas fa-cloud-arrow-up"></i>
                             <h4>Upload Photos</h4>
                             <p>Drag and drop your business photos here, or click to browse</p>
-                            <button type="button" class="btn-upload">Choose Files</button>
-                            <span class="upload-note">Accepted formats: JPG, PNG (Max 5MB each)</span>
+                            <button type="button" class="btn-upload" id="uploadBtn">Choose Files</button>
+                            <input type="file" id="fileInput" multiple accept="image/jpeg,image/png,image/webp" style="display:none;">
+                            <span class="upload-note">Accepted formats: JPG, PNG, WebP (Max 5MB each)</span>
                         </div>
+                        <div id="filePreview" class="file-preview"></div>
                     </div>
 
                     <!-- Submit Section -->
@@ -865,5 +867,6 @@
     </div>
 </div>
 <script src="script-business.js"></script>
+<script src="auth-state.js"></script>
 </body> <!--this is something-->
 </html>

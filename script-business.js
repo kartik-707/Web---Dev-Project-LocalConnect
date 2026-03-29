@@ -213,17 +213,11 @@ const submitBtn = document.getElementById('submitBtn');
 const saveDraftBtn = document.getElementById('saveDraftBtn');
 
 if (businessForm) {
-    businessForm.addEventListener('submit', function(e) {
+    businessForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // Validate form
-        if (!this.checkValidity()) {
-            alert('Please fill in all required fields');
-            return;
-        }
-        
         // Check description length
-        if (description.value.length < 100) {
+        if (description && description.value.length < 100) {
             alert('Business description must be at least 100 characters');
             description.focus();
             return;
@@ -236,61 +230,81 @@ if (businessForm) {
             return;
         }
         
-        // Collect form data
-        const formData = collectFormData();
+        // Build FormData for multipart upload
+        const formData = new FormData();
+        formData.append('businessName', document.getElementById('businessName').value);
+        formData.append('category', document.getElementById('category').value);
+        formData.append('email', document.getElementById('email').value);
+        formData.append('phone', document.getElementById('phone').value);
+        formData.append('description', (document.getElementById('description') || {}).value || '');
+        formData.append('address', (document.getElementById('address') || {}).value || '');
+        formData.append('city', (document.getElementById('city') || {}).value || '');
+        formData.append('state', (document.getElementById('state') || {}).value || '');
+        formData.append('zipcode', (document.getElementById('zipcode') || {}).value || '');
+        formData.append('serviceArea', (document.getElementById('serviceArea') || {}).value || '');
+        formData.append('website', (document.getElementById('website') || {}).value || '');
+        formData.append('yearsInBusiness', (document.getElementById('yearsInBusiness') || {}).value || '');
+        formData.append('certifications', (document.getElementById('certifications') || {}).value || '');
         
-        // Show success message
-        showSuccessModal(formData);
+        // Collect business hours
+        const hours = {};
+        days.forEach(day => {
+            const openTime = document.querySelector(`input[data-day="${day}"][data-type="open"]`).value;
+            const closeTime = document.querySelector(`input[data-day="${day}"][data-type="close"]`).value;
+            const closed = document.querySelector(`.closed-checkbox[data-day="${day}"]`).checked;
+            hours[day] = closed ? 'Closed' : `${openTime} - ${closeTime}`;
+        });
+        formData.append('hours', JSON.stringify(hours));
+        
+        // Collect services
+        const services = [];
+        document.querySelectorAll('.checkbox-grid input[type="checkbox"]:checked').forEach(cb => {
+            services.push(cb.parentElement.textContent.trim());
+        });
+        formData.append('services', JSON.stringify(services));
+        
+        // Append uploaded files
+        for (const file of uploadedFiles) {
+            formData.append('photos', file);
+        }
+        
+        // Submit to API
+        const submitBtn = document.querySelector('.btn-primary-large[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = 'Submitting...';
+        submitBtn.disabled = true;
+        
+        try {
+            const res = await fetch('/api/business/listing', {
+                method: 'POST',
+                credentials: 'include',
+                body: formData
+            });
+            
+            const data = await res.json();
+            
+            if (res.ok) {
+                showSuccessModal(data.business);
+            } else {
+                alert(data.error || 'Failed to submit listing.');
+                submitBtn.textContent = originalText;
+                submitBtn.disabled = false;
+            }
+        } catch (err) {
+            alert('Could not connect to server. Please try again.');
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+        }
     });
 }
 
 if (saveDraftBtn) {
     saveDraftBtn.addEventListener('click', function() {
-        const formData = collectFormData();
-        console.log('Saving draft:', formData);
-        
         alert('Draft Saved!\n\nYour business listing has been saved as a draft. You can continue editing it later from your dashboard.');
     });
 }
 
-function collectFormData() {
-    const formData = {
-        businessName: document.getElementById('businessName').value,
-        category: document.getElementById('category').value,
-        email: document.getElementById('email').value,
-        phone: document.getElementById('phone').value,
-        description: document.getElementById('description').value,
-        address: document.getElementById('address').value,
-        city: document.getElementById('city').value,
-        state: document.getElementById('state').value,
-        zipcode: document.getElementById('zipcode').value,
-        serviceArea: document.getElementById('serviceArea').value,
-        website: document.getElementById('website').value,
-        yearsInBusiness: document.getElementById('yearsInBusiness').value,
-        certifications: document.getElementById('certifications').value,
-        hours: {},
-        services: [],
-        photos: uploadedFiles.length
-    };
-    
-    // Collect business hours
-    days.forEach(day => {
-        const openTime = document.querySelector(`input[data-day="${day}"][data-type="open"]`).value;
-        const closeTime = document.querySelector(`input[data-day="${day}"][data-type="close"]`).value;
-        const closed = document.querySelector(`.closed-checkbox[data-day="${day}"]`).checked;
-        
-        formData.hours[day] = closed ? 'Closed' : `${openTime} - ${closeTime}`;
-    });
-    
-    // Collect services
-    document.querySelectorAll('input[name="services"]:checked').forEach(checkbox => {
-        formData.services.push(checkbox.value);
-    });
-    
-    return formData;
-}
-
-function showSuccessModal(formData) {
+function showSuccessModal(businessData) {
     const modal = document.createElement('div');
     modal.className = 'success-modal';
     modal.innerHTML = `
@@ -301,15 +315,16 @@ function showSuccessModal(formData) {
             <h2>Submission Successful!</h2>
             <p>Thank you for listing your business with LocalConnect!</p>
             <div class="modal-details">
-                <p><strong>Business Name:</strong> ${formData.businessName}</p>
-                <p><strong>Category:</strong> ${formData.category}</p>
-                <p><strong>Location:</strong> ${formData.city}, ${formData.state}</p>
+                <p><strong>Business Name:</strong> ${businessData.businessName || ''}</p>
+                <p><strong>Category:</strong> ${businessData.category || ''}</p>
+                <p><strong>Location:</strong> ${businessData.city || ''}${businessData.state ? ', ' + businessData.state : ''}</p>
+                <p><strong>Photos Uploaded:</strong> ${businessData.photosUploaded || 0}</p>
             </div>
             <p class="next-steps">
                 <strong>What happens next?</strong><br>
-                Our team will review your listing within 24-48 hours. You'll receive a verification email at ${formData.email} once approved.
+                Your listing is now live! You can view it on the <a href="services.html">Services page</a>.
             </p>
-            <button class="btn-primary-large" onclick="window.location.href='index.html'">Return to Homepage</button>
+            <button class="btn-primary-large" onclick="window.location.href='services.html'">View Services</button>
         </div>
     `;
     

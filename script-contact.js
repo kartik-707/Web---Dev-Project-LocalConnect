@@ -40,10 +40,9 @@ const contactForm = document.getElementById('contactForm');
 const submitBtn = document.getElementById('submitBtn');
 
 if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
+    contactForm.addEventListener('submit', async function(e) {
         e.preventDefault();
         
-        // Get form values
         const formData = {
             firstName: document.getElementById('firstName').value,
             lastName: document.getElementById('lastName').value,
@@ -53,18 +52,32 @@ if (contactForm) {
             message: document.getElementById('message').value
         };
         
-        // Disable button and show loading
         submitBtn.disabled = true;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
         
-        // Simulate form submission
-        setTimeout(() => {
-            showSuccessMessage(formData);
-            contactForm.reset();
-            charCounter.textContent = '0 / 500';
-            submitBtn.disabled = false;
-            submitBtn.innerHTML = 'Send Message';
-        }, 1500);
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(formData)
+            });
+            
+            const data = await res.json();
+            
+            if (res.ok) {
+                showSuccessMessage(formData);
+                contactForm.reset();
+                if (charCounter) charCounter.textContent = '0 / 500';
+            } else {
+                alert(data.error || 'Failed to send message.');
+            }
+        } catch (err) {
+            alert('Could not connect to server. Please try again.');
+        }
+        
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = 'Send Message';
     });
 }
 
