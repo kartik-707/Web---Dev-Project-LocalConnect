@@ -1,3 +1,100 @@
+// ── Edit Mode Detection ──
+const urlParams = new URLSearchParams(window.location.search);
+const editId = urlParams.get('edit');
+let isEditMode = !!editId;
+
+// ── Auth check — only business accounts can access ──
+(async function checkBusinessAuth() {
+    try {
+        const res = await fetch('/api/auth/me', { credentials: 'include' });
+        if (!res.ok) {
+            alert('Please sign in with a business account to list your business.');
+            window.location.href = 'signin.html';
+            return;
+        }
+        const data = await res.json();
+        if (!data.user || data.user.accountType !== 'business') {
+            alert('Only business accounts can list businesses. Please sign in with a business account.');
+            window.location.href = 'signin.html';
+            return;
+        }
+        // If edit mode, load existing data
+        if (isEditMode) {
+            loadEditData(editId);
+        }
+    } catch (err) {
+        // Server not available — let them use the form
+    }
+})();
+
+async function loadEditData(id) {
+    try {
+        const res = await fetch(`/api/business/listing/${id}`, { credentials: 'include' });
+        if (!res.ok) return;
+        const data = await res.json();
+        const biz = data.business;
+
+        // Update page title and submit button
+        document.title = 'Edit Business - LocalConnect';
+        const pageTitle = document.querySelector('.page-header h1, h1');
+        if (pageTitle) pageTitle.textContent = 'Edit Your Business';
+        const submitBtn = document.querySelector('.btn-primary-large[type="submit"]');
+        if (submitBtn) submitBtn.textContent = 'Update Listing';
+
+        // Fill in form fields
+        const setVal = (id, val) => { const el = document.getElementById(id); if (el && val) el.value = val; };
+        setVal('businessName', biz.businessName);
+        setVal('category', biz.category);
+        setVal('email', biz.email);
+        setVal('phone', biz.phone);
+        setVal('description', biz.description);
+        setVal('address', biz.address);
+        setVal('city', biz.city);
+        setVal('state', biz.state);
+        setVal('zipcode', biz.zipcode);
+        setVal('serviceArea', biz.serviceArea);
+        setVal('website', biz.website);
+        setVal('yearsInBusiness', biz.yearsInBusiness);
+        setVal('certifications', biz.certifications);
+
+        // Fill hours
+        if (biz.hours && typeof biz.hours === 'object') {
+            Object.entries(biz.hours).forEach(([day, val]) => {
+                const closedCb = document.querySelector(`.closed-checkbox[data-day="${day}"]`);
+                const openInput = document.querySelector(`input[data-day="${day}"][data-type="open"]`);
+                const closeInput = document.querySelector(`input[data-day="${day}"][data-type="close"]`);
+                if (val === 'Closed') {
+                    if (closedCb) { closedCb.checked = true; closedCb.dispatchEvent(new Event('change')); }
+                } else if (val.includes(' - ')) {
+                    const [open, close] = val.split(' - ');
+                    if (openInput) openInput.value = open.trim();
+                    if (closeInput) closeInput.value = close.trim();
+                    if (closedCb) closedCb.checked = false;
+                }
+            });
+        }
+
+        // Check service checkboxes
+        if (Array.isArray(biz.services)) {
+            document.querySelectorAll('.checkbox-grid input[type="checkbox"]').forEach(cb => {
+                const label = cb.parentElement.textContent.trim();
+                if (biz.services.includes(label)) cb.checked = true;
+            });
+        }
+
+        // Update char count
+        if (biz.description) {
+            const charCount = document.querySelector('.char-count');
+            if (charCount) {
+                charCount.textContent = `${biz.description.length} / 100 characters minimum`;
+                if (biz.description.length >= 100) charCount.style.color = 'green';
+            }
+        }
+    } catch (err) {
+        console.error('Failed to load edit data:', err);
+    }
+}
+
 // Mobile Menu Toggle
 const mobileMenuToggle = document.getElementById('mobileMenuToggle');
 const navMenu = document.getElementById('navMenu');
@@ -271,12 +368,14 @@ if (businessForm) {
         // Submit to API
         const submitBtn = document.querySelector('.btn-primary-large[type="submit"]');
         const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Submitting...';
+        submitBtn.textContent = isEditMode ? 'Updating...' : 'Submitting...';
         submitBtn.disabled = true;
         
         try {
-            const res = await fetch('/api/business/listing', {
-                method: 'POST',
+            const url = isEditMode ? `/api/business/listing/${editId}` : '/api/business/listing';
+            const method = isEditMode ? 'PUT' : 'POST';
+            const res = await fetch(url, {
+                method,
                 credentials: 'include',
                 body: formData
             });
@@ -284,7 +383,12 @@ if (businessForm) {
             const data = await res.json();
             
             if (res.ok) {
-                showSuccessModal(data.business);
+                if (isEditMode) {
+                    alert('Listing updated successfully!');
+                    window.location.href = 'my-listings.html';
+                } else {
+                    showSuccessModal(data.business);
+                }
             } else {
                 alert(data.error || 'Failed to submit listing.');
                 submitBtn.textContent = originalText;

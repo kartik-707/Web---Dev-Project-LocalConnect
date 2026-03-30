@@ -8,13 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
-    <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
-            <a href="index.html" class="logo">
-                <i class="fas fa-location-dot"></i>
-                <span>LocalConnect</span>
-            </a>
+            <a href="index.html" class="logo"><i class="fas fa-location-dot"></i><span>LocalConnect</span></a>
             <ul class="nav-menu" id="navMenu">
                 <li><a href="index.html">Home</a></li>
                 <li><a href="services.html">Services</a></li>
@@ -29,57 +25,27 @@
         </div>
     </nav>
 
-    <!-- Profile Content — filled by JS -->
     <div id="profileContent">
-        <div style="text-align:center; padding:100px 20px;">
-            <i class="fas fa-spinner fa-spin" style="font-size:40px; color:var(--dark-stone);"></i>
-            <p style="margin-top:20px; color:var(--text-light);">Loading business profile...</p>
-        </div>
+        <div style="text-align:center;padding:100px 20px;"><i class="fas fa-spinner fa-spin" style="font-size:40px;color:var(--dark-stone);"></i><p style="margin-top:20px;color:var(--text-light);">Loading business profile...</p></div>
     </div>
 
-    <!-- Footer -->
+    <!-- Reviews Section (rendered after profile loads) -->
+    <div id="reviewsSection" style="display:none;"></div>
+
     <footer class="footer">
         <div class="container">
             <div class="footer-grid">
-                <div class="footer-col">
-                    <div class="footer-logo">
-                        <i class="fas fa-location-dot"></i>
-                        <span>LocalConnect</span>
-                    </div>
-                    <p>Connecting communities with trusted local service professionals since 2020.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook"></i></a>
-                        <a href="#"><i class="fab fa-twitter"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-linkedin"></i></a>
-                    </div>
-                </div>
-                <div class="footer-col"><h4>For Users</h4><ul>
-                    <li><a href="services.html">Find Services</a></li>
-                    <li><a href="#">How It Works</a></li>
-                    <li><a href="#">Help Center</a></li>
-                </ul></div>
-                <div class="footer-col"><h4>For Businesses</h4><ul>
-                    <li><a href="business-listing.html">List Your Business</a></li>
-                    <li><a href="#">Business Resources</a></li>
-                </ul></div>
-                <div class="footer-col"><h4>Company</h4><ul>
-                    <li><a href="about.html">About Us</a></li>
-                    <li><a href="contact.html">Contact</a></li>
-                    <li><a href="privacy-policy.html">Privacy Policy</a></li>
-                    <li><a href="terms-of-service.html">Terms of Service</a></li>
-                </ul></div>
+                <div class="footer-col"><div class="footer-logo"><i class="fas fa-location-dot"></i><span>LocalConnect</span></div><p>Connecting communities with trusted local service professionals since 2020.</p></div>
+                <div class="footer-col"><h4>For Users</h4><ul><li><a href="services.html">Find Services</a></li><li><a href="signin.html">My Account</a></li><li><a href="contact.html">Help Center</a></li></ul></div>
+                <div class="footer-col"><h4>For Businesses</h4><ul><li><a href="business-listing.html">List Your Business</a></li><li><a href="my-listings.html">Manage Listings</a></li></ul></div>
+                <div class="footer-col"><h4>Company</h4><ul><li><a href="about.html">About Us</a></li><li><a href="contact.html">Contact</a></li><li><a href="privacy-policy.html">Privacy Policy</a></li><li><a href="terms-of-service.html">Terms of Service</a></li></ul></div>
             </div>
             <div class="footer-bottom"><p>&copy; 2026 LocalConnect. All rights reserved.</p></div>
         </div>
     </footer>
 
     <style>
-        .profile-hero {
-            background: linear-gradient(135deg, var(--dark-stone) 0%, var(--accent-brown) 100%);
-            color: var(--white);
-            padding: 60px 20px 40px;
-        }
+        .profile-hero { background: linear-gradient(135deg, var(--dark-stone) 0%, var(--accent-brown) 100%); color: var(--white); padding: 60px 20px 40px; }
         .profile-hero .container { max-width: 1100px; margin: 0 auto; }
         .profile-hero h1 { font-size: 38px; margin-bottom: 10px; }
         .profile-meta { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 15px; }
@@ -87,31 +53,24 @@
         .profile-stars { display: flex; gap: 3px; }
         .profile-stars i { color: #FFA500; }
         .profile-badge { background: rgba(255,255,255,0.2); padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 600; }
-
         .profile-body { max-width: 1100px; margin: 0 auto; padding: 40px 20px; display: grid; grid-template-columns: 2fr 1fr; gap: 40px; }
-        
         .profile-main h2 { font-size: 24px; color: var(--text-dark); margin-bottom: 20px; border-bottom: 2px solid var(--stone-cream); padding-bottom: 10px; }
         .profile-main h2 i { margin-right: 8px; color: var(--dark-stone); }
         .profile-description { color: var(--text-light); line-height: 1.8; font-size: 16px; margin-bottom: 40px; }
-
         .services-tags { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 40px; }
         .service-tag { padding: 10px 20px; background: var(--stone-cream); color: var(--accent-brown); border-radius: 25px; font-weight: 600; font-size: 14px; }
-
         .hours-table { width: 100%; border-collapse: collapse; margin-bottom: 40px; }
         .hours-table td { padding: 12px 16px; border-bottom: 1px solid var(--stone-cream); color: var(--text-dark); font-size: 15px; }
         .hours-table td:first-child { font-weight: 600; width: 140px; }
-        .hours-table tr.today { background: var(--stone-cream); border-radius: 8px; }
+        .hours-table tr.today { background: var(--stone-cream); }
         .hours-closed { color: #e74c3c; font-weight: 600; }
-
         .photo-gallery { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px; margin-bottom: 40px; }
         .photo-gallery img { width: 100%; height: 180px; object-fit: cover; border-radius: 10px; cursor: pointer; transition: transform 0.3s; }
         .photo-gallery img:hover { transform: scale(1.03); }
         .photo-gallery .no-photos { grid-column: 1/-1; text-align: center; padding: 40px; background: var(--stone-cream); border-radius: 12px; color: var(--text-light); }
-
         .profile-sidebar .sidebar-card { background: var(--white); border-radius: 12px; box-shadow: 0 2px 12px var(--shadow); padding: 30px; margin-bottom: 25px; }
         .sidebar-card h3 { font-size: 20px; margin-bottom: 20px; color: var(--text-dark); }
         .sidebar-card h3 i { margin-right: 8px; color: var(--dark-stone); }
-
         .contact-row { display: flex; align-items: center; gap: 12px; padding: 14px 0; border-bottom: 1px solid var(--stone-cream); }
         .contact-row:last-of-type { border-bottom: none; }
         .contact-row i { width: 40px; height: 40px; background: var(--stone-cream); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--dark-stone); flex-shrink: 0; }
@@ -119,29 +78,54 @@
         .contact-row .c-value { font-weight: 600; color: var(--text-dark); margin-top: 2px; }
         .contact-row a { color: var(--dark-stone); text-decoration: none; }
         .contact-row a:hover { text-decoration: underline; }
-
         .btn-block { display: block; width: 100%; padding: 14px; text-align: center; border: none; border-radius: 8px; font-weight: 600; font-size: 16px; cursor: pointer; transition: all 0.3s; margin-bottom: 10px; text-decoration: none; }
         .btn-block-primary { background: var(--dark-stone); color: var(--white); }
         .btn-block-primary:hover { background: var(--accent-brown); transform: translateY(-2px); }
         .btn-block-secondary { background: var(--stone-cream); color: var(--accent-brown); }
         .btn-block-secondary:hover { background: var(--light-stone); }
-
         .certs-list { list-style: none; padding: 0; }
         .certs-list li { padding: 10px 0; border-bottom: 1px solid var(--stone-cream); color: var(--text-dark); display: flex; align-items: center; gap: 10px; }
         .certs-list li i { color: #2ecc71; }
-
         .back-link { display: inline-flex; align-items: center; gap: 6px; color: rgba(255,255,255,0.8); text-decoration: none; font-size: 14px; margin-bottom: 20px; transition: color 0.2s; }
         .back-link:hover { color: white; }
 
-        @media (max-width: 968px) {
-            .profile-body { grid-template-columns: 1fr; }
-        }
+        /* Reviews Section */
+        .reviews-container { max-width: 1100px; margin: 0 auto; padding: 0 20px 60px; }
+        .reviews-container h2 { font-size: 24px; color: var(--text-dark); margin-bottom: 25px; border-bottom: 2px solid var(--stone-cream); padding-bottom: 10px; }
+        .reviews-container h2 i { margin-right: 8px; color: var(--dark-stone); }
+        .review-form-card { background: var(--white); border-radius: 12px; box-shadow: 0 2px 12px var(--shadow); padding: 30px; margin-bottom: 30px; }
+        .review-form-card h3 { font-size: 18px; margin-bottom: 15px; color: var(--text-dark); }
+        .star-picker { display: flex; gap: 8px; margin-bottom: 15px; }
+        .star-picker i { font-size: 28px; color: #ddd; cursor: pointer; transition: color 0.2s, transform 0.2s; }
+        .star-picker i:hover { transform: scale(1.15); }
+        .star-picker i.active { color: #FFA500; }
+        .review-textarea { width: 100%; padding: 14px; border: 2px solid var(--light-stone); border-radius: 8px; resize: vertical; min-height: 80px; font-family: inherit; font-size: 15px; outline: none; box-sizing: border-box; }
+        .review-textarea:focus { border-color: var(--dark-stone); }
+        .btn-review-submit { padding: 12px 28px; background: var(--dark-stone); color: white; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; margin-top: 12px; transition: all 0.3s; }
+        .btn-review-submit:hover { background: var(--accent-brown); }
+        .review-card { background: var(--white); border-radius: 12px; box-shadow: 0 1px 6px var(--shadow); padding: 25px; margin-bottom: 15px; }
+        .review-card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .review-card-author { display: flex; align-items: center; gap: 12px; }
+        .review-card-avatar { width: 42px; height: 42px; border-radius: 50%; background: var(--stone-cream); display: flex; align-items: center; justify-content: center; color: var(--dark-stone); font-weight: 700; font-size: 16px; }
+        .review-card-name { font-weight: 600; color: var(--text-dark); }
+        .review-card-date { font-size: 13px; color: var(--text-light); }
+        .review-card-stars { display: flex; gap: 3px; }
+        .review-card-stars i { color: #FFA500; font-size: 14px; }
+        .review-card-comment { color: var(--text-light); line-height: 1.6; margin-top: 10px; }
+        .no-reviews { text-align: center; padding: 40px; background: var(--stone-cream); border-radius: 12px; color: var(--text-light); }
+        .login-to-review { background: var(--stone-cream); padding: 25px; border-radius: 12px; text-align: center; margin-bottom: 30px; }
+        .login-to-review a { color: var(--dark-stone); font-weight: 600; }
+
+        @media (max-width: 968px) { .profile-body { grid-template-columns: 1fr; } }
     </style>
 
     <script>
+        let currentBusinessId = null;
+
         async function loadProfile() {
             const params = new URLSearchParams(window.location.search);
             const id = params.get('id');
+            currentBusinessId = id;
             if (!id) {
                 document.getElementById('profileContent').innerHTML = '<div style="text-align:center;padding:100px 20px;"><h2>Business not found</h2><p><a href="services.html">← Back to Services</a></p></div>';
                 return;
@@ -155,10 +139,9 @@
 
                 document.title = `${biz.businessName} - LocalConnect`;
 
-                const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                const daysOfWeek = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
                 const todayName = daysOfWeek[new Date().getDay()];
 
-                // Stars
                 let starsHtml = '';
                 for (let i = 1; i <= 5; i++) {
                     if (biz.rating >= i) starsHtml += '<i class="fas fa-star"></i>';
@@ -166,12 +149,10 @@
                     else starsHtml += '<i class="far fa-star" style="opacity:0.5"></i>';
                 }
 
-                // Services
                 const servicesHtml = (biz.services || []).map(s => `<span class="service-tag">${esc(s)}</span>`).join('');
 
-                // Hours
                 let hoursHtml = '';
-                const orderedDays = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+                const orderedDays = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
                 for (const day of orderedDays) {
                     const val = (biz.hours || {})[day] || 'Not set';
                     const isToday = day === todayName;
@@ -179,7 +160,6 @@
                     hoursHtml += `<tr class="${isToday ? 'today' : ''}"><td>${day}${isToday ? ' (Today)' : ''}</td><td class="${isClosed ? 'hours-closed' : ''}">${esc(val)}</td></tr>`;
                 }
 
-                // Photos
                 let photosHtml = '';
                 if (biz.photos && biz.photos.length > 0) {
                     photosHtml = biz.photos.map(p => `<img src="/uploads/${p.filename}" alt="${esc(p.originalName)}">`).join('');
@@ -187,7 +167,6 @@
                     photosHtml = '<div class="no-photos"><i class="fas fa-camera" style="font-size:40px;margin-bottom:15px;display:block;"></i>No photos uploaded yet</div>';
                 }
 
-                // Certs
                 const certLines = (biz.certifications || '').split(',').map(c => c.trim()).filter(c => c);
                 const certsHtml = certLines.length > 0
                     ? `<ul class="certs-list">${certLines.map(c => `<li><i class="fas fa-check-circle"></i> ${esc(c)}</li>`).join('')}</ul>`
@@ -210,73 +189,190 @@
                             </div>
                         </div>
                     </section>
-
                     <div class="profile-body">
                         <div class="profile-main">
                             <h2><i class="fas fa-info-circle"></i> About</h2>
                             <p class="profile-description">${esc(biz.description || 'No description provided.')}</p>
-
                             <h2><i class="fas fa-concierge-bell"></i> Services Offered</h2>
                             <div class="services-tags">${servicesHtml || '<p style="color:var(--text-light);">No services listed</p>'}</div>
-
                             <h2><i class="fas fa-camera"></i> Photos</h2>
                             <div class="photo-gallery">${photosHtml}</div>
-
                             <h2><i class="fas fa-clock"></i> Business Hours</h2>
                             <table class="hours-table">${hoursHtml}</table>
                         </div>
-
                         <div class="profile-sidebar">
                             <div class="sidebar-card">
                                 <h3><i class="fas fa-address-book"></i> Contact</h3>
-                                <div class="contact-row">
-                                    <i class="fas fa-phone"></i>
-                                    <div><div class="c-label">Phone</div><div class="c-value"><a href="tel:${biz.phone}">${esc(biz.phone)}</a></div></div>
-                                </div>
-                                <div class="contact-row">
-                                    <i class="fas fa-envelope"></i>
-                                    <div><div class="c-label">Email</div><div class="c-value"><a href="mailto:${biz.email}">${esc(biz.email)}</a></div></div>
-                                </div>
+                                <div class="contact-row"><i class="fas fa-phone"></i><div><div class="c-label">Phone</div><div class="c-value"><a href="tel:${biz.phone}">${esc(biz.phone)}</a></div></div></div>
+                                <div class="contact-row"><i class="fas fa-envelope"></i><div><div class="c-label">Email</div><div class="c-value"><a href="mailto:${biz.email}">${esc(biz.email)}</a></div></div></div>
                                 ${biz.website ? `<div class="contact-row"><i class="fas fa-globe"></i><div><div class="c-label">Website</div><div class="c-value"><a href="${biz.website}" target="_blank">${esc(biz.website)}</a></div></div></div>` : ''}
                                 <div style="margin-top:20px;">
                                     <a href="tel:${biz.phone}" class="btn-block btn-block-primary"><i class="fas fa-phone"></i> Call Now</a>
                                     <a href="mailto:${biz.email}" class="btn-block btn-block-secondary"><i class="fas fa-envelope"></i> Send Email</a>
                                 </div>
                             </div>
-
                             <div class="sidebar-card">
                                 <h3><i class="fas fa-location-dot"></i> Location</h3>
                                 <p style="color:var(--text-dark);line-height:1.6;margin-bottom:8px;">${esc(fullAddr)}</p>
                                 ${biz.serviceArea ? `<p style="color:var(--text-light);font-size:14px;margin-bottom:15px;"><i class="fas fa-map-marked-alt"></i> Service Area: ${esc(biz.serviceArea)}</p>` : ''}
                                 <a href="${mapsUrl}" target="_blank" class="btn-block btn-block-primary"><i class="fas fa-map-location-dot"></i> Open in Google Maps</a>
                             </div>
-
-                            ${certLines.length > 0 ? `
-                            <div class="sidebar-card">
-                                <h3><i class="fas fa-certificate"></i> Certifications</h3>
-                                ${certsHtml}
-                            </div>` : ''}
-
-                            ${biz.yearsInBusiness ? `
-                            <div class="sidebar-card">
-                                <h3><i class="fas fa-briefcase"></i> Experience</h3>
-                                <p style="font-size:36px;font-weight:700;color:var(--dark-stone);margin-bottom:5px;">${biz.yearsInBusiness}+</p>
-                                <p style="color:var(--text-light);">Years in Business</p>
-                            </div>` : ''}
+                            ${certLines.length > 0 ? `<div class="sidebar-card"><h3><i class="fas fa-certificate"></i> Certifications</h3>${certsHtml}</div>` : ''}
+                            ${biz.yearsInBusiness ? `<div class="sidebar-card"><h3><i class="fas fa-briefcase"></i> Experience</h3><p style="font-size:36px;font-weight:700;color:var(--dark-stone);margin-bottom:5px;">${biz.yearsInBusiness}+</p><p style="color:var(--text-light);">Years in Business</p></div>` : ''}
                         </div>
                     </div>
                 `;
+
+                // Load reviews
+                loadReviews(id);
             } catch (err) {
                 document.getElementById('profileContent').innerHTML = '<div style="text-align:center;padding:100px 20px;"><h2 style="color:var(--text-dark);">Business not found</h2><p style="color:var(--text-light);margin-top:10px;">This listing may have been removed.</p><p style="margin-top:20px;"><a href="services.html" class="btn-primary" style="text-decoration:none;padding:12px 24px;">← Browse Services</a></p></div>';
             }
         }
 
-        function esc(text) {
-            if (!text) return '';
-            const d = document.createElement('div');
-            d.textContent = text;
-            return d.innerHTML;
+        // ─── Reviews ───
+        async function loadReviews(businessId) {
+            const section = document.getElementById('reviewsSection');
+            section.style.display = 'block';
+
+            try {
+                const res = await fetch(`/api/business/listing/${businessId}/reviews`);
+                const data = await res.json();
+                const reviews = data.reviews || [];
+
+                // Check if user is logged in
+                let currentUser = window.__localconnectUser;
+                // If auth-state.js hasn't run yet, try fetching
+                if (!currentUser) {
+                    try {
+                        const authRes = await fetch('/api/auth/me', { credentials: 'include' });
+                        if (authRes.ok) {
+                            const authData = await authRes.json();
+                            currentUser = authData.user;
+                        }
+                    } catch(e) {}
+                }
+
+                let reviewFormHtml = '';
+                if (currentUser) {
+                    reviewFormHtml = `
+                        <div class="review-form-card">
+                            <h3><i class="fas fa-pen"></i> Leave a Review</h3>
+                            <div class="star-picker" id="starPicker">
+                                <i class="far fa-star" data-rating="1"></i>
+                                <i class="far fa-star" data-rating="2"></i>
+                                <i class="far fa-star" data-rating="3"></i>
+                                <i class="far fa-star" data-rating="4"></i>
+                                <i class="far fa-star" data-rating="5"></i>
+                            </div>
+                            <textarea class="review-textarea" id="reviewComment" placeholder="Share your experience with this business..."></textarea>
+                            <button class="btn-review-submit" id="submitReview"><i class="fas fa-paper-plane"></i> Submit Review</button>
+                        </div>
+                    `;
+                } else {
+                    reviewFormHtml = `<div class="login-to-review"><i class="fas fa-sign-in-alt" style="font-size:24px;color:var(--dark-stone);margin-bottom:10px;display:block;"></i><a href="signin.html">Sign in</a> to leave a review</div>`;
+                }
+
+                let reviewsListHtml = '';
+                if (reviews.length > 0) {
+                    reviewsListHtml = reviews.map(r => {
+                        let stars = '';
+                        for (let i = 1; i <= 5; i++) stars += `<i class="fas fa-star" style="color:${i <= r.rating ? '#FFA500' : '#ddd'};font-size:14px;"></i>`;
+                        const initials = (r.firstName || '?')[0] + (r.lastName || '?')[0];
+                        const date = new Date(r.createdAt).toLocaleDateString('en-IN', { year: 'numeric', month: 'short', day: 'numeric' });
+                        return `
+                            <div class="review-card">
+                                <div class="review-card-header">
+                                    <div class="review-card-author">
+                                        <div class="review-card-avatar">${initials.toUpperCase()}</div>
+                                        <div>
+                                            <div class="review-card-name">${esc(r.firstName)} ${esc(r.lastName)}</div>
+                                            <div class="review-card-date">${date}</div>
+                                        </div>
+                                    </div>
+                                    <div class="review-card-stars">${stars}</div>
+                                </div>
+                                ${r.comment ? `<p class="review-card-comment">${esc(r.comment)}</p>` : ''}
+                            </div>
+                        `;
+                    }).join('');
+                } else {
+                    reviewsListHtml = '<div class="no-reviews"><i class="fas fa-comments" style="font-size:40px;margin-bottom:15px;display:block;"></i>No reviews yet — be the first!</div>';
+                }
+
+                section.innerHTML = `
+                    <div class="reviews-container">
+                        <h2><i class="fas fa-star"></i> Reviews (${reviews.length})</h2>
+                        ${reviewFormHtml}
+                        ${reviewsListHtml}
+                    </div>
+                `;
+
+                // Star picker interaction
+                if (currentUser) {
+                    let selectedRating = 0;
+                    const starPicker = document.getElementById('starPicker');
+                    if (starPicker) {
+                        const stars = starPicker.querySelectorAll('i');
+                        stars.forEach(star => {
+                            star.addEventListener('mouseenter', () => {
+                                const r = parseInt(star.dataset.rating);
+                                stars.forEach((s, i) => {
+                                    s.className = i < r ? 'fas fa-star active' : 'far fa-star';
+                                });
+                            });
+                            star.addEventListener('click', () => {
+                                selectedRating = parseInt(star.dataset.rating);
+                                stars.forEach((s, i) => {
+                                    s.className = i < selectedRating ? 'fas fa-star active' : 'far fa-star';
+                                });
+                            });
+                        });
+                        starPicker.addEventListener('mouseleave', () => {
+                            stars.forEach((s, i) => {
+                                s.className = i < selectedRating ? 'fas fa-star active' : 'far fa-star';
+                            });
+                        });
+                    }
+
+                    const submitBtn = document.getElementById('submitReview');
+                    if (submitBtn) {
+                        submitBtn.addEventListener('click', async () => {
+                            if (selectedRating === 0) { alert('Please select a star rating.'); return; }
+                            const comment = document.getElementById('reviewComment').value;
+                            submitBtn.disabled = true;
+                            submitBtn.textContent = 'Submitting...';
+                            try {
+                                const res = await fetch(`/api/business/listing/${businessId}/review`, {
+                                    method: 'POST',
+                                    headers: { 'Content-Type': 'application/json' },
+                                    credentials: 'include',
+                                    body: JSON.stringify({ rating: selectedRating, comment })
+                                });
+                                const data = await res.json();
+                                if (res.ok) {
+                                    loadReviews(businessId);
+                                    // Also refresh the hero rating
+                                    loadProfile();
+                                } else {
+                                    alert(data.error || 'Failed to submit review.');
+                                    submitBtn.disabled = false;
+                                    submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Review';
+                                }
+                            } catch (err) {
+                                alert('Connection error.');
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = '<i class="fas fa-paper-plane"></i> Submit Review';
+                            }
+                        });
+                    }
+                }
+            } catch (err) {
+                section.innerHTML = '<div class="reviews-container"><p style="color:#e74c3c;">Failed to load reviews.</p></div>';
+            }
         }
+
+        function esc(text) { if (!text) return ''; const d = document.createElement('div'); d.textContent = text; return d.innerHTML; }
 
         loadProfile();
     </script>

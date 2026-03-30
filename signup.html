@@ -35,29 +35,45 @@
             <!-- Left Side - Welcome Content -->
             <div class="signin-left">
                 <div class="welcome-content">
-                    <h1>Join LocalConnect!</h1>
-                    <p>Create your account and start connecting with trusted local service professionals today.</p>
+                    <h1 id="welcomeTitle">Join LocalConnect!</h1>
+                    <p id="welcomeSubtitle">Create your account and start connecting with trusted local service professionals today.</p>
                     
-                    <div class="benefits-list">
-                        <div class="benefit-item">
+                    <div class="benefits-list" id="benefitsList">
+                        <div class="benefit-item" data-for="customer">
                             <i class="fas fa-check-circle"></i>
                             <span>Free account creation</span>
                         </div>
-                        <div class="benefit-item">
+                        <div class="benefit-item" data-for="customer">
                             <i class="fas fa-check-circle"></i>
                             <span>Access to verified professionals</span>
                         </div>
-                        <div class="benefit-item">
+                        <div class="benefit-item" data-for="customer">
                             <i class="fas fa-check-circle"></i>
                             <span>Save and track your bookings</span>
                         </div>
-                        <div class="benefit-item">
+                        <div class="benefit-item" data-for="customer">
                             <i class="fas fa-check-circle"></i>
                             <span>Share reviews and experiences</span>
                         </div>
+                        <div class="benefit-item" data-for="business" style="display:none;">
+                            <i class="fas fa-check-circle"></i>
+                            <span>List your business for free</span>
+                        </div>
+                        <div class="benefit-item" data-for="business" style="display:none;">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Reach thousands of local customers</span>
+                        </div>
+                        <div class="benefit-item" data-for="business" style="display:none;">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Manage listings & contact info</span>
+                        </div>
+                        <div class="benefit-item" data-for="business" style="display:none;">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Build your reputation with reviews</span>
+                        </div>
                     </div>
 
-                    <div class="illustration">
+                    <div class="illustration" id="welcomeIcon">
                         <i class="fas fa-user-plus"></i>
                     </div>
                 </div>
@@ -71,10 +87,12 @@
                         <button class="account-type-btn active" data-type="customer">
                             <i class="fas fa-user"></i>
                             <span>Customer</span>
+                            <span class="btn-desc">Find & hire services</span>
                         </button>
                         <button class="account-type-btn" data-type="business">
                             <i class="fas fa-briefcase"></i>
                             <span>Business</span>
+                            <span class="btn-desc">List your business</span>
                         </button>
                     </div>
 
@@ -202,9 +220,8 @@
                     <h4>For Users</h4>
                     <ul>
                         <li><a href="services.html">Find Services</a></li>
-                        <li><a href="#">How It Works</a></li>
-                        <li><a href="#">Write a Review</a></li>
-                        <li><a href="#">Help Center</a></li>
+                        <li><a href="signin.html">My Account</a></li>
+                        <li><a href="contact.html">Help Center</a></li>
                     </ul>
                 </div>
 
@@ -212,9 +229,7 @@
                     <h4>For Businesses</h4>
                     <ul>
                         <li><a href="business-listing.html">List Your Business</a></li>
-                        <li><a href="#">Business Resources</a></li>
-                        <li><a href="#">Success Stories</a></li>
-                        <li><a href="#">Pricing</a></li>
+                        <li><a href="my-listings.html">Manage Listings</a></li>
                     </ul>
                 </div>
 
@@ -305,10 +320,9 @@
         }
 
         .signin-right {
-            padding: 60px 50px;
+            padding: 40px 50px;
             display: flex;
-            align-items: center;
-            max-height: 90vh;
+            align-items: flex-start;
             overflow-y: auto;
         }
 
@@ -319,12 +333,17 @@
         .account-type-selector {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 15px;
-            margin-bottom: 30px;
+            gap: 12px;
+            margin-bottom: 25px;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+            background: white;
+            padding: 10px 0 15px;
         }
 
         .account-type-btn {
-            padding: 15px 20px;
+            padding: 18px 20px;
             background: var(--stone-cream);
             border: 2px solid var(--light-stone);
             border-radius: 12px;
@@ -342,19 +361,26 @@
         }
 
         .account-type-btn span {
-            font-weight: 600;
+            font-weight: 700;
             font-size: 15px;
         }
 
         .account-type-btn:hover {
             background: var(--light-stone);
-            transform: translateY(-3px);
+            transform: translateY(-2px);
         }
 
         .account-type-btn.active {
             background: var(--dark-stone);
             color: var(--white);
             border-color: var(--dark-stone);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .account-type-btn .btn-desc {
+            font-size: 11px;
+            font-weight: 400;
+            opacity: 0.7;
         }
 
         .form-header {
@@ -709,7 +735,25 @@
                 accountTypeBtns.forEach(b => b.classList.remove('active'));
                 this.classList.add('active');
                 currentAccountType = this.getAttribute('data-type');
-                formTitle.textContent = currentAccountType === 'customer' ? 'Create Customer Account' : 'Create Business Account';
+                
+                const isBiz = currentAccountType === 'business';
+                formTitle.textContent = isBiz ? 'Create Business Account' : 'Create Customer Account';
+
+                // Update left panel
+                const welcomeTitle = document.getElementById('welcomeTitle');
+                const welcomeSubtitle = document.getElementById('welcomeSubtitle');
+                const welcomeIcon = document.getElementById('welcomeIcon');
+                if (welcomeTitle) welcomeTitle.textContent = isBiz ? 'Grow Your Business!' : 'Join LocalConnect!';
+                if (welcomeSubtitle) welcomeSubtitle.textContent = isBiz
+                    ? 'Create a business account to list your services and connect with local customers.'
+                    : 'Create your account and start connecting with trusted local service professionals today.';
+                if (welcomeIcon) welcomeIcon.innerHTML = isBiz
+                    ? '<i class="fas fa-store"></i>'
+                    : '<i class="fas fa-user-plus"></i>';
+
+                // Toggle benefits
+                document.querySelectorAll('.benefit-item[data-for="customer"]').forEach(el => el.style.display = isBiz ? 'none' : 'flex');
+                document.querySelectorAll('.benefit-item[data-for="business"]').forEach(el => el.style.display = isBiz ? 'flex' : 'none');
             });
         });
 

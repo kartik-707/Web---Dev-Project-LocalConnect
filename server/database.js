@@ -65,6 +65,17 @@ db.exec(`
         message TEXT NOT NULL,
         createdAt DATETIME DEFAULT CURRENT_TIMESTAMP
     );
+
+    CREATE TABLE IF NOT EXISTS reviews (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        businessId INTEGER NOT NULL,
+        userId INTEGER NOT NULL,
+        rating INTEGER NOT NULL CHECK(rating >= 1 AND rating <= 5),
+        comment TEXT,
+        createdAt DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (businessId) REFERENCES businesses(id),
+        FOREIGN KEY (userId) REFERENCES users(id)
+    );
 `);
 
 // Add rating/reviewCount columns if they don't exist (for existing DBs)

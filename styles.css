@@ -58,6 +58,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 20px;
 }
 
 .logo {
@@ -76,7 +77,9 @@ body {
 .nav-menu {
     display: flex;
     list-style: none;
-    gap: 30px;
+    gap: 25px;
+    flex-shrink: 1;
+    min-width: 0;
 }
 
 .nav-menu a {
@@ -94,7 +97,9 @@ body {
 
 .nav-buttons {
     display: flex;
-    gap: 15px;
+    gap: 12px;
+    align-items: center;
+    flex-shrink: 0;
 }
 
 /* Buttons */

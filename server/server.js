@@ -16,7 +16,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Session configuration
 app.use(session({
-    secret: 'localconnect-secret-key-2026',
+    secret: process.env.SESSION_SECRET || 'localconnect-secret-key-2026',
     resave: false,
     saveUninitialized: false,
     cookie: {

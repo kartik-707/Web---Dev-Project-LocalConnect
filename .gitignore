@@ -7,17 +7,35 @@ server/localconnect.db-wal
 server/localconnect.db-shm
 
 # Uploaded files
-server/uploads/
+server/uploads/*
+!server/uploads/.gitkeep
+
+# Environment
+.env
+.env.*
 
 # OS files
 .DS_Store
 Thumbs.db
 desktop.ini
+$RECYCLE.BIN/
+*.lnk
 
 # IDE
 .vscode/
 .idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # Logs
 *.log
 npm-debug.log*
+
+# Build / Test
+dist/
+coverage/
+*.tmp
+*.temp
