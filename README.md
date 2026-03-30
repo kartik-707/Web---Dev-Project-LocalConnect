@@ -1,5 +1,7 @@
 # LocalConnect
 
+Website currently live at - https://web-dev-project-localconnect.onrender.com/
+
 A full-stack local service directory platform where customers can discover trusted service professionals in their area, and businesses can list and manage their services.
 
 Built with Node.js, Express, and SQLite.
