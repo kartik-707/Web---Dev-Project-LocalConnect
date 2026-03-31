@@ -68,7 +68,7 @@ localconnect/
 ### Installation
 
 ```bash
-git clone <repo-url>
+git clone https://github.com/kartik-707/Web---Dev-Project-LocalConnect.git
 cd localconnect
 npm install
 ```
