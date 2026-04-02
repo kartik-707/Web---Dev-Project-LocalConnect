@@ -1,10 +1,7 @@
 # Dependencies
 node_modules/
 
-# Database files (recreated on startup with seed data)
-server/localconnect.db
-server/localconnect.db-wal
-server/localconnect.db-shm
+# Database files (no longer needed — using PostgreSQL)
 
 # Uploaded files
 server/uploads/*

@@ -2,7 +2,7 @@ const express = require('express');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
-const db = require('../database');
+const { query } = require('../database');
 
 const router = express.Router();
 
@@ -56,51 +56,54 @@ function requireBusiness(req, res, next) {
 }
 
 // ─── GET all listings (with filters, search, sort, pagination) ───
-router.get('/listings', (req, res) => {
+router.get('/listings', async (req, res) => {
     try {
         const { search, category, rating, sort, page = 1, limit = 12 } = req.query;
 
         let whereClauses = ["b.status = 'approved'"];
         let params = [];
+        let paramIndex = 1;
 
         if (category && category !== 'All Categories' && category !== '') {
-            whereClauses.push('b.category = ?');
+            whereClauses.push(`b.category = $${paramIndex++}`);
             params.push(category);
         }
 
         if (rating && rating !== '' && rating !== 'all') {
             const minRating = parseFloat(rating);
             if (!isNaN(minRating)) {
-                whereClauses.push('b.rating >= ?');
+                whereClauses.push(`b.rating >= $${paramIndex++}`);
                 params.push(minRating);
             }
         }
 
         if (search && search.trim() !== '') {
             const searchTerm = `%${search.trim()}%`;
-            whereClauses.push('(b.businessName LIKE ? OR b.description LIKE ? OR b.services LIKE ? OR b.category LIKE ?)');
-            params.push(searchTerm, searchTerm, searchTerm, searchTerm);
+            whereClauses.push(`(b."businessName" ILIKE $${paramIndex} OR b.description ILIKE $${paramIndex} OR b.services ILIKE $${paramIndex} OR b.category ILIKE $${paramIndex})`);
+            paramIndex++;
+            params.push(searchTerm);
         }
 
         const whereSQL = whereClauses.length > 0 ? 'WHERE ' + whereClauses.join(' AND ') : '';
 
-        let orderSQL = 'ORDER BY b.rating DESC, b.reviewCount DESC';
+        let orderSQL = 'ORDER BY b.rating DESC, b."reviewCount" DESC';
         if (sort === 'rating') orderSQL = 'ORDER BY b.rating DESC';
-        else if (sort === 'reviews') orderSQL = 'ORDER BY b.reviewCount DESC';
-        else if (sort === 'newest') orderSQL = 'ORDER BY b.createdAt DESC';
-        else if (sort === 'name') orderSQL = 'ORDER BY b.businessName ASC';
-        else if (sort === 'years') orderSQL = 'ORDER BY b.yearsInBusiness DESC';
+        else if (sort === 'reviews') orderSQL = 'ORDER BY b."reviewCount" DESC';
+        else if (sort === 'newest') orderSQL = 'ORDER BY b."createdAt" DESC';
+        else if (sort === 'name') orderSQL = 'ORDER BY b."businessName" ASC';
+        else if (sort === 'years') orderSQL = 'ORDER BY b."yearsInBusiness" DESC';
 
-        const { total } = db.prepare(`SELECT COUNT(*) as total FROM businesses b ${whereSQL}`).get(...params);
+        const countResult = await query(`SELECT COUNT(*) as total FROM businesses b ${whereSQL}`, params);
+        const total = parseInt(countResult.rows[0].total);
         const offset = (parseInt(page) - 1) * parseInt(limit);
 
-        const businesses = db.prepare(`
+        const listingsResult = await query(`
             SELECT b.*, 
-                (SELECT GROUP_CONCAT(bp.filename) FROM business_photos bp WHERE bp.businessId = b.id) as photoFiles
-            FROM businesses b ${whereSQL} ${orderSQL} LIMIT ? OFFSET ?
-        `).all(...params, parseInt(limit), offset);
+                (SELECT STRING_AGG(bp.filename, ',') FROM business_photos bp WHERE bp."businessId" = b.id) as "photoFiles"
+            FROM businesses b ${whereSQL} ${orderSQL} LIMIT $${paramIndex++} OFFSET $${paramIndex++}
+        `, [...params, parseInt(limit), offset]);
 
-        const results = businesses.map(biz => ({
+        const results = listingsResult.rows.map(biz => ({
             ...biz,
             services: safeJsonParse(biz.services, []),
             hours: safeJsonParse(biz.hours, {}),
@@ -115,16 +118,16 @@ router.get('/listings', (req, res) => {
 });
 
 // ─── GET my listings (business owner only) ───
-router.get('/my-listings', requireAuth, requireBusiness, (req, res) => {
+router.get('/my-listings', requireAuth, requireBusiness, async (req, res) => {
     try {
         const userId = req.session.userId;
-        const businesses = db.prepare(`
+        const result = await query(`
             SELECT b.*, 
-                (SELECT GROUP_CONCAT(bp.filename) FROM business_photos bp WHERE bp.businessId = b.id) as photoFiles
-            FROM businesses b WHERE b.userId = ? ORDER BY b.createdAt DESC
-        `).all(userId);
+                (SELECT STRING_AGG(bp.filename, ',') FROM business_photos bp WHERE bp."businessId" = b.id) as "photoFiles"
+            FROM businesses b WHERE b."userId" = $1 ORDER BY b."createdAt" DESC
+        `, [userId]);
 
-        const results = businesses.map(biz => ({
+        const results = result.rows.map(biz => ({
             ...biz,
             services: safeJsonParse(biz.services, []),
             hours: safeJsonParse(biz.hours, {}),
@@ -139,20 +142,21 @@ router.get('/my-listings', requireAuth, requireBusiness, (req, res) => {
 });
 
 // ─── GET single listing by ID ───
-router.get('/listing/:id', (req, res) => {
+router.get('/listing/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const business = db.prepare('SELECT * FROM businesses WHERE id = ?').get(id);
-        if (!business) return res.status(404).json({ error: 'Business not found.' });
+        const bizResult = await query('SELECT * FROM businesses WHERE id = $1', [id]);
+        if (bizResult.rows.length === 0) return res.status(404).json({ error: 'Business not found.' });
 
-        const photos = db.prepare('SELECT * FROM business_photos WHERE businessId = ?').all(id);
+        const business = bizResult.rows[0];
+        const photosResult = await query('SELECT * FROM business_photos WHERE "businessId" = $1', [id]);
 
         res.json({
             business: {
                 ...business,
                 services: safeJsonParse(business.services, []),
                 hours: safeJsonParse(business.hours, {}),
-                photos: photos.map(p => ({ filename: p.filename, originalName: p.originalName }))
+                photos: photosResult.rows.map(p => ({ filename: p.filename, originalName: p.originalName }))
             }
         });
     } catch (err) {
@@ -162,7 +166,7 @@ router.get('/listing/:id', (req, res) => {
 });
 
 // ─── POST submit new listing (business only) ───
-router.post('/listing', requireAuth, requireBusiness, upload.array('photos', 10), (req, res) => {
+router.post('/listing', requireAuth, requireBusiness, upload.array('photos', 10), async (req, res) => {
     try {
         const {
             businessName, category, email, phone,
@@ -177,11 +181,12 @@ router.post('/listing', requireAuth, requireBusiness, upload.array('photos', 10)
 
         const userId = req.session.userId;
 
-        const result = db.prepare(`
+        const result = await query(`
             INSERT INTO businesses 
-            (userId, businessName, category, email, phone, description, address, city, state, zipcode, serviceArea, website, yearsInBusiness, certifications, services, hours, rating, reviewCount, status)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 0, 0, 'approved')
-        `).run(
+            ("userId", "businessName", category, email, phone, description, address, city, state, zipcode, "serviceArea", website, "yearsInBusiness", certifications, services, hours, rating, "reviewCount", status)
+            VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, 0, 0, 'approved')
+            RETURNING id
+        `, [
             userId, businessName, category, email, phone,
             description || '', address || '', city || '', state || '', zipcode || '',
             serviceArea || '', website || '',
@@ -189,13 +194,14 @@ router.post('/listing', requireAuth, requireBusiness, upload.array('photos', 10)
             certifications || '',
             typeof services === 'string' ? services : JSON.stringify(services || []),
             typeof hours === 'string' ? hours : JSON.stringify(hours || {})
-        );
+        ]);
 
-        const businessId = result.lastInsertRowid;
+        const businessId = result.rows[0].id;
 
         if (req.files && req.files.length > 0) {
-            const photoStmt = db.prepare('INSERT INTO business_photos (businessId, filename, originalName) VALUES (?, ?, ?)');
-            for (const file of req.files) photoStmt.run(businessId, file.filename, file.originalname);
+            for (const file of req.files) {
+                await query('INSERT INTO business_photos ("businessId", filename, "originalName") VALUES ($1, $2, $3)', [businessId, file.filename, file.originalname]);
+            }
         }
 
         res.status(201).json({
@@ -209,14 +215,16 @@ router.post('/listing', requireAuth, requireBusiness, upload.array('photos', 10)
 });
 
 // ─── PUT update listing (owner only) ───
-router.put('/listing/:id', requireAuth, requireBusiness, upload.array('photos', 10), (req, res) => {
+router.put('/listing/:id', requireAuth, requireBusiness, upload.array('photos', 10), async (req, res) => {
     try {
         const { id } = req.params;
         const userId = req.session.userId;
 
         // Verify ownership
-        const existing = db.prepare('SELECT * FROM businesses WHERE id = ? AND userId = ?').get(id, userId);
-        if (!existing) return res.status(403).json({ error: 'You can only edit your own listings.' });
+        const existingResult = await query('SELECT * FROM businesses WHERE id = $1 AND "userId" = $2', [id, userId]);
+        if (existingResult.rows.length === 0) return res.status(403).json({ error: 'You can only edit your own listings.' });
+
+        const existing = existingResult.rows[0];
 
         const {
             businessName, category, email, phone,
@@ -225,13 +233,13 @@ router.put('/listing/:id', requireAuth, requireBusiness, upload.array('photos', 
             certifications, services, hours
         } = req.body;
 
-        db.prepare(`
+        await query(`
             UPDATE businesses SET
-                businessName=?, category=?, email=?, phone=?, description=?,
-                address=?, city=?, state=?, zipcode=?, serviceArea=?,
-                website=?, yearsInBusiness=?, certifications=?, services=?, hours=?
-            WHERE id=? AND userId=?
-        `).run(
+                "businessName"=$1, category=$2, email=$3, phone=$4, description=$5,
+                address=$6, city=$7, state=$8, zipcode=$9, "serviceArea"=$10,
+                website=$11, "yearsInBusiness"=$12, certifications=$13, services=$14, hours=$15
+            WHERE id=$16 AND "userId"=$17
+        `, [
             businessName || existing.businessName,
             category || existing.category,
             email || existing.email,
@@ -248,12 +256,13 @@ router.put('/listing/:id', requireAuth, requireBusiness, upload.array('photos', 
             typeof services === 'string' ? services : (existing.services || '[]'),
             typeof hours === 'string' ? hours : (existing.hours || '{}'),
             id, userId
-        );
+        ]);
 
         // Add new photos if uploaded
         if (req.files && req.files.length > 0) {
-            const photoStmt = db.prepare('INSERT INTO business_photos (businessId, filename, originalName) VALUES (?, ?, ?)');
-            for (const file of req.files) photoStmt.run(id, file.filename, file.originalname);
+            for (const file of req.files) {
+                await query('INSERT INTO business_photos ("businessId", filename, "originalName") VALUES ($1, $2, $3)', [id, file.filename, file.originalname]);
+            }
         }
 
         res.json({ message: 'Listing updated successfully!', business: { id: parseInt(id), businessName: businessName || existing.businessName } });
@@ -264,25 +273,25 @@ router.put('/listing/:id', requireAuth, requireBusiness, upload.array('photos', 
 });
 
 // ─── DELETE listing (owner only) ───
-router.delete('/listing/:id', requireAuth, requireBusiness, (req, res) => {
+router.delete('/listing/:id', requireAuth, requireBusiness, async (req, res) => {
     try {
         const { id } = req.params;
         const userId = req.session.userId;
 
-        const existing = db.prepare('SELECT * FROM businesses WHERE id = ? AND userId = ?').get(id, userId);
-        if (!existing) return res.status(403).json({ error: 'You can only delete your own listings.' });
+        const existingResult = await query('SELECT * FROM businesses WHERE id = $1 AND "userId" = $2', [id, userId]);
+        if (existingResult.rows.length === 0) return res.status(403).json({ error: 'You can only delete your own listings.' });
 
         // Delete photos from disk
-        const photos = db.prepare('SELECT filename FROM business_photos WHERE businessId = ?').all(id);
-        for (const photo of photos) {
+        const photosResult = await query('SELECT filename FROM business_photos WHERE "businessId" = $1', [id]);
+        for (const photo of photosResult.rows) {
             const filePath = path.join(uploadsDir, photo.filename);
             if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
         }
 
-        // Delete from DB
-        db.prepare('DELETE FROM business_photos WHERE businessId = ?').run(id);
-        db.prepare('DELETE FROM reviews WHERE businessId = ?').run(id);
-        db.prepare('DELETE FROM businesses WHERE id = ?').run(id);
+        // Delete from DB (order matters for foreign keys)
+        await query('DELETE FROM business_photos WHERE "businessId" = $1', [id]);
+        await query('DELETE FROM reviews WHERE "businessId" = $1', [id]);
+        await query('DELETE FROM businesses WHERE id = $1', [id]);
 
         res.json({ message: 'Business listing deleted successfully.' });
     } catch (err) {
@@ -292,7 +301,7 @@ router.delete('/listing/:id', requireAuth, requireBusiness, (req, res) => {
 });
 
 // ─── POST review (customers only) ───
-router.post('/listing/:id/review', requireAuth, (req, res) => {
+router.post('/listing/:id/review', requireAuth, async (req, res) => {
     try {
         const { id } = req.params;
         const userId = req.session.userId;
@@ -303,23 +312,23 @@ router.post('/listing/:id/review', requireAuth, (req, res) => {
         }
 
         // Check business exists
-        const business = db.prepare('SELECT id FROM businesses WHERE id = ?').get(id);
-        if (!business) return res.status(404).json({ error: 'Business not found.' });
+        const bizResult = await query('SELECT id FROM businesses WHERE id = $1', [id]);
+        if (bizResult.rows.length === 0) return res.status(404).json({ error: 'Business not found.' });
 
         // Insert review
-        db.prepare('INSERT INTO reviews (businessId, userId, rating, comment) VALUES (?, ?, ?, ?)').run(id, userId, rating, comment || '');
+        await query('INSERT INTO reviews ("businessId", "userId", rating, comment) VALUES ($1, $2, $3, $4)', [id, userId, rating, comment || '']);
 
         // Recalculate average rating
-        const stats = db.prepare('SELECT AVG(rating) as avgRating, COUNT(*) as count FROM reviews WHERE businessId = ?').get(id);
-        db.prepare('UPDATE businesses SET rating = ?, reviewCount = ? WHERE id = ?').run(
-            Math.round(stats.avgRating * 10) / 10,
-            stats.count,
-            id
-        );
+        const statsResult = await query('SELECT AVG(rating) as "avgRating", COUNT(*) as count FROM reviews WHERE "businessId" = $1', [id]);
+        const stats = statsResult.rows[0];
+        const avgRating = Math.round(parseFloat(stats.avgRating) * 10) / 10;
+        const count = parseInt(stats.count);
+
+        await query('UPDATE businesses SET rating = $1, "reviewCount" = $2 WHERE id = $3', [avgRating, count, id]);
 
         res.status(201).json({
             message: 'Review submitted!',
-            review: { rating, comment, avgRating: Math.round(stats.avgRating * 10) / 10, totalReviews: stats.count }
+            review: { rating, comment, avgRating, totalReviews: count }
         });
     } catch (err) {
         console.error('Review error:', err);
@@ -328,16 +337,16 @@ router.post('/listing/:id/review', requireAuth, (req, res) => {
 });
 
 // ─── GET reviews for a business ───
-router.get('/listing/:id/reviews', (req, res) => {
+router.get('/listing/:id/reviews', async (req, res) => {
     try {
         const { id } = req.params;
-        const reviews = db.prepare(`
-            SELECT r.*, u.firstName, u.lastName 
-            FROM reviews r JOIN users u ON r.userId = u.id 
-            WHERE r.businessId = ? ORDER BY r.createdAt DESC
-        `).all(id);
+        const result = await query(`
+            SELECT r.*, u."firstName", u."lastName" 
+            FROM reviews r JOIN users u ON r."userId" = u.id 
+            WHERE r."businessId" = $1 ORDER BY r."createdAt" DESC
+        `, [id]);
 
-        res.json({ reviews });
+        res.json({ reviews: result.rows });
     } catch (err) {
         console.error('Get reviews error:', err);
         res.status(500).json({ error: 'Failed to fetch reviews.' });

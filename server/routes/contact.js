@@ -1,10 +1,10 @@
 const express = require('express');
-const db = require('../database');
+const { query } = require('../database');
 
 const router = express.Router();
 
 // Submit contact form
-router.post('/', (req, res) => {
+router.post('/', async (req, res) => {
     try {
         const { firstName, lastName, email, phone, subject, message } = req.body;
 
@@ -12,10 +12,10 @@ router.post('/', (req, res) => {
             return res.status(400).json({ error: 'Please fill in all required fields.' });
         }
 
-        const stmt = db.prepare(
-            'INSERT INTO contact_messages (firstName, lastName, email, phone, subject, message) VALUES (?, ?, ?, ?, ?, ?)'
+        await query(
+            'INSERT INTO contact_messages ("firstName", "lastName", email, phone, subject, message) VALUES ($1, $2, $3, $4, $5, $6)',
+            [firstName, lastName, email, phone || '', subject, message]
         );
-        stmt.run(firstName, lastName, email, phone || '', subject, message);
 
         res.status(201).json({ message: 'Message sent successfully! We will get back to you within 24 hours.' });
     } catch (err) {

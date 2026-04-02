@@ -1,7 +1,9 @@
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 const express = require('express');
 const session = require('express-session');
 const cors = require('cors');
 const path = require('path');
+const { initializeDatabase } = require('./database');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -41,9 +43,11 @@ app.use('/api/auth', authRoutes);
 app.use('/api/business', businessRoutes);
 app.use('/api/contact', contactRoutes);
 
-// Start server
-app.listen(PORT, () => {
-    console.log(`
+// Initialize database then start server
+initializeDatabase()
+    .then(() => {
+        app.listen(PORT, () => {
+            console.log(`
 ╔══════════════════════════════════════════╗
 ║     🌐 LocalConnect Server Running      ║
 ║                                          ║
@@ -51,5 +55,10 @@ app.listen(PORT, () => {
 ║                                          ║
 ║     Press Ctrl+C to stop                 ║
 ╚══════════════════════════════════════════╝
-    `);
-});
+            `);
+        });
+    })
+    .catch((err) => {
+        console.error('❌ Failed to start server:', err);
+        process.exit(1);
+    });

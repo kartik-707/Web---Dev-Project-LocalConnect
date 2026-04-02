@@ -1,6 +1,6 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
-const db = require('../database');
+const { query } = require('../database');
 
 const router = express.Router();
 
@@ -15,8 +15,8 @@ router.post('/signup', async (req, res) => {
         }
 
         // Check if email already exists
-        const existingUser = db.prepare('SELECT id FROM users WHERE email = ?').get(email);
-        if (existingUser) {
+        const existingUser = await query('SELECT id FROM users WHERE email = $1', [email]);
+        if (existingUser.rows.length > 0) {
             return res.status(409).json({ error: 'An account with this email already exists.' });
         }
 
@@ -30,15 +30,15 @@ router.post('/signup', async (req, res) => {
         const passwordHash = await bcrypt.hash(password, salt);
 
         // Insert user
-        const stmt = db.prepare(
-            'INSERT INTO users (firstName, lastName, email, phone, passwordHash, accountType) VALUES (?, ?, ?, ?, ?, ?)'
+        const result = await query(
+            'INSERT INTO users ("firstName", "lastName", email, phone, "passwordHash", "accountType") VALUES ($1, $2, $3, $4, $5, $6) RETURNING id',
+            [firstName, lastName, email, phone || '', passwordHash, accountType || 'customer']
         );
-        const result = stmt.run(firstName, lastName, email, phone || '', passwordHash, accountType || 'customer');
 
         res.status(201).json({
             message: 'Account created successfully!',
             user: {
-                id: result.lastInsertRowid,
+                id: result.rows[0].id,
                 firstName,
                 lastName,
                 email,
@@ -62,7 +62,8 @@ router.post('/signin', async (req, res) => {
         }
 
         // Find user
-        const user = db.prepare('SELECT * FROM users WHERE email = ?').get(email);
+        const result = await query('SELECT * FROM users WHERE email = $1', [email]);
+        const user = result.rows[0];
         if (!user) {
             return res.status(401).json({ error: 'Invalid email or password.' });
         }
